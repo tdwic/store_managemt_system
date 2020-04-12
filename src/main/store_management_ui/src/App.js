@@ -21,7 +21,7 @@ class App extends Component{
   return (
     <Router>
     <div className="App">
-    //side nav bar
+    {/*side nav bar*/}
       <div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
