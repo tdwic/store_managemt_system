@@ -28,6 +28,15 @@ public class DemoController {
 
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    public DemoUser userUpdate(@RequestBody DemoUser demoUser){
+        System.out.println("Name " + demoUser.getName());
+        System.out.println("Age "+demoUser.getAge());
+        System.out.println("Role " + demoUser.getRole());
+
+        return demoUser;
+
+    }
 
 
 }
