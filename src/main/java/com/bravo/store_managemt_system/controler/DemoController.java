@@ -1,14 +1,18 @@
 package com.bravo.store_managemt_system.controler;
 
 import com.bravo.store_managemt_system.DTO.DemoUser;
+import com.bravo.store_managemt_system.repository.demo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DemoController {
 
+    @Autowired
+    private demo demorepository;
     //Accept only int value and return them after process
     @RequestMapping(value = "/demo/{j}", method = RequestMethod.GET)
     public int showData(@PathVariable int j){
@@ -24,7 +28,7 @@ public class DemoController {
         System.out.println("Age "+demoUser.getAge());
         System.out.println("Role " + demoUser.getRole());
 
-        return demoUser;
+        return demorepository.save(demoUser);
 
     }
 
