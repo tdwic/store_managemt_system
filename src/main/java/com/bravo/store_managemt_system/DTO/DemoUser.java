@@ -1,7 +1,12 @@
 package com.bravo.store_managemt_system.DTO;
 
-public class DemoUser {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "users")
+public class DemoUser {
+    @Id
+    private String id;
     private String name;
     private int age;
     private String role;
