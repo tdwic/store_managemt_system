@@ -12,6 +12,14 @@ import Loging from './Components/Authenticaton/Loging';
 import SignUp from './Components/Authenticaton/SignUp';
 import UserProfile from './Components/Authenticaton/UserProfile';
 import WishList from './Components/WishList/WishList';
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Badge from "react-bootstrap/Badge";
 
 class App extends Component{
   // constructor(props){
@@ -22,6 +30,7 @@ class App extends Component{
     <Router>
     <div className="App">
         <div className="wrapper d-flex align-items-stretch">
+
             <nav id="sidebar" className="active">
                 <div className="custom-menu">
                     <button type="button" id="sidebarCollapse" className="btn btn-primary">
@@ -33,19 +42,19 @@ class App extends Component{
                     <h1><a href="index.html" className="logo">E-Shop</a></h1>
                     <ul className="list-unstyled components mb-5">
                         <li className="active">
-                            <a href={'/Home'}><span className="fa fa-home mr-3"></span> Home</a>
+                            <Link to={'/Home'}><span className="fa fa-home mr-3"></span> Home</Link>
                         </li>
                         <li>
-                            <a href={'/About'}><span className="fa fa-user mr-3"></span> About</a>
+                            <Link to={'/About'}><span className="fa fa-user mr-3"></span> About</Link>
                         </li>
                         <li>
-                            <a href={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> Portfolio</a>
+                            <Link to={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> Portfolio</Link>
                         </li>
                         <li>
-                            <a href={'WishList'}><span className="fa fa-sticky-note mr-3"></span> WishList</a>
+                            <Link to={'WishList'}><span className="fa fa-sticky-note mr-3"></span> WishList</Link>
                         </li>
                         <li>
-                            <a href="#"><span className="fa fa-paper-plane mr-3"></span> Contact</a>
+                            <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
                         </li>
                     </ul>
 
@@ -65,7 +74,7 @@ class App extends Component{
                             <script>document.write(new Date().getFullYear());</script>
                             All rights reserved | Made <i className="icon-heart"
                                                                                 aria-hidden="true"></i> by <a
-                                href="https://teamBravo.com" target="_blank">Colorlib.com</a>
+                                href="https://teamBravo.com" target="_blank">Team Bravo</a>
                             </p>
                     </div>
 
@@ -73,10 +82,45 @@ class App extends Component{
             </nav>
 
 
-            <div id="content" className="p-4 p-md-5 pt-5">
+            <div id="content" className="p-4 p-md-3 pt-5 ml-5" >
+
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                    <Navbar.Brand href="#home">E - S H O P</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Nav.Link href="#features">Home</Nav.Link>
+
+                            <NavDropdown title="Item Categories" id="collasible-nav-dropdown" >
+                                <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Category 3</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link href="#deets">Wish List</Nav.Link>
+                        </Nav>
+
+                        <Nav>
+                            <Nav.Link href="#memes">
+                                <button type="button" className="btn btn-outline-success"><i
+                                    className="fa fa-shopping-cart"></i>
+                                    &nbsp; <Badge variant="light">2</Badge>
+                                </button>
+
+                            </Nav.Link>
+
+                            <Nav.Link href="#memes">
+                                <button type="button" className="btn btn-outline-primary">Login</button>
+                            </Nav.Link>
+
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+
 
                 <Switch>
-
+                    <Route exact path='/' component={Home} />
                     <Route exact path='/Home' component={Home} />
                     <Route exact path='/About' component={About} />
                     <Route exact path='/UserProfile' component={UserProfile} />
@@ -85,17 +129,7 @@ class App extends Component{
                     <Route exact path='/SignUp' component={SignUp} />
 
                 </Switch>
-            {/*    <h2 className="mb-4">Sidebar #03</h2>*/}
-            {/*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore*/}
-            {/*    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut*/}
-            {/*    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse*/}
-            {/*    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in*/}
-            {/*    culpa qui officia deserunt mollit anim id est laborum.</p>*/}
-            {/*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore*/}
-            {/*    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut*/}
-            {/*    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse*/}
-            {/*    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in*/}
-            {/*    culpa qui officia deserunt mollit anim id est laborum.</p>*/}
+
         </div>
         </div>
     </div>
