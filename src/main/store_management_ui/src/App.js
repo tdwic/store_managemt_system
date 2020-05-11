@@ -79,10 +79,8 @@ class App extends Component{
                         <p>
                             Copyright &copy;
                             <script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | Made <i className="icon-heart"
-                                                                                aria-hidden="true"></i> by <a
-                                href="https://teamBravo.com" target="_blank">Team Bravo</a>
-                            </p>
+                            All rights reserved | Made <i className="icon-heart" aria-hidden="true"></i> by <a href="https://teamBravo.com" target="_blank">Team Bravo</a>
+                        </p>
                     </div>
 
                 </div>
@@ -97,21 +95,19 @@ class App extends Component{
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="#features">Home</Nav.Link>
-
-                            <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
+                                <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
                                 <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.3">Category 3</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                            </NavDropdown>
+                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                </NavDropdown>
                             <Nav.Link href="#deets">Wish List</Nav.Link>
                         </Nav>
 
                         <Nav>
                             <Nav.Link href="#memes">
-                                <button type="button" className="btn btn-outline-success"><i
-                                    className="fa fa-shopping-cart"></i>
+                                <button type="button" className="btn btn-outline-success"><i className="fa fa-shopping-cart"></i>
                                     &nbsp; <Badge variant="light">2</Badge>
                                 </button>
 
@@ -134,7 +130,6 @@ class App extends Component{
                     <Route exact path='/WishList' component={WishList} />
                     <Route exact path='/Loging' component={Loging} />
                     <Route exact path='/SignUp' component={SignUp} />
-
                 </Switch>
 
         </div>

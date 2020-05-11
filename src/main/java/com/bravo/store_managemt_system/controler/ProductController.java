@@ -5,6 +5,8 @@ import com.bravo.store_managemt_system.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
@@ -30,6 +32,13 @@ public class ProductController {
    public void removeProduct(@PathVariable String productId){
 
       productService.removeProduct(productId);
+
+   }
+
+   @RequestMapping(value = "/product", method = RequestMethod.GET)
+   public ArrayList<Product> showData(){
+
+      return productService.getProduct() ;
 
    }
 
