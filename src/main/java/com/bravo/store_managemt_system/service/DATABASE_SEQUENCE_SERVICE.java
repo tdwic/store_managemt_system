@@ -18,7 +18,7 @@ public class DATABASE_SEQUENCE_SERVICE {
     public void setTableCurrentNumber(String tableName){
         DATABASE_SEQUENCE database_sequence = new DATABASE_SEQUENCE();
 
-        database_sequence = database_sequence_repository.findById("1");
+        //database_sequence = database_sequence_repository.findById("1");
 
         database_sequence.setTableId(1);
         database_sequence.setTableName(tableName);
