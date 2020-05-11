@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { CommonGet , CommonPost} from '../config';
+import { CommonGet , CommonPost} from '../../config';
 
 
 class UserProfile extends Component {

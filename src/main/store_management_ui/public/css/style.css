@@ -8144,7 +8144,7 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #f8b739; }
+  color: #494ca2; }
   a:hover, a:focus {
     text-decoration: none !important;
     outline: none !important;
@@ -8203,32 +8203,29 @@ h1, h2, h3, h4, h5,
   outline: none !important;
   border: none; }
 
-.line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0; }
-
 .wrapper {
   width: 100%; }
 
 #sidebar {
-  min-width: 300px;
-  max-width: 300px;
-  background: #1d1919;
+  min-width: 270px;
+  max-width: 270px;
+  background: #494ca2;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
-  transition: all 0.3s; }
+  transition: all 0.3s;
+  position: relative; }
+  #sidebar .h6 {
+    color: #fff; }
   #sidebar.active {
-    margin-left: -300px; }
-  #sidebar .logo {
-    display: block;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto; }
-    #sidebar .logo span {
-      display: block; }
+    margin-left: -270px; }
+    #sidebar.active .custom-menu {
+      margin-right: -50px; }
+  #sidebar h1 {
+    margin-bottom: 20px;
+    font-weight: 700; }
+    #sidebar h1 .logo {
+      color: #fff; }
   #sidebar ul.components {
     padding: 0; }
   #sidebar ul li {
@@ -8240,18 +8237,45 @@ h1, h2, h3, h4, h5,
     #sidebar ul li a {
       padding: 10px 0;
       display: block;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.6);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
       #sidebar ul li a:hover {
-        color: #f8b739; }
+        color: #fff; }
     #sidebar ul li.active > a {
       background: transparent;
-      color: #f8b739; }
+      color: #fff; }
   @media (max-width: 991.98px) {
     #sidebar {
-      margin-left: -300px; }
+      margin-left: -270px; }
       #sidebar.active {
-        margin-left: 0; } }
+        margin-left: 0; }
+      #sidebar .custom-menu {
+        margin-right: -60px !important;
+        top: 10px !important; } }
+  #sidebar .custom-menu {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    margin-right: -20px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+    @media (prefers-reduced-motion: reduce) {
+      #sidebar .custom-menu {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none; } }
+    #sidebar .custom-menu .btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%; }
+      #sidebar .custom-menu .btn.btn-primary {
+        background: #393c7f;
+        border-color: #393c7f; }
+        #sidebar .custom-menu .btn.btn-primary:hover, #sidebar .custom-menu .btn.btn-primary:focus {
+          background: #393c7f !important;
+          border-color: #393c7f !important; }
 
 a[data-toggle="collapse"] {
   position: relative; }
@@ -8278,11 +8302,38 @@ a[data-toggle="collapse"] {
   transition: all 0.3s; }
 
 .btn.btn-primary {
-  background: #f8b739;
-  border-color: #f8b739; }
+  background: #494ca2;
+  border-color: #494ca2; }
   .btn.btn-primary:hover, .btn.btn-primary:focus {
-    background: #f8b739 !important;
-    border-color: #f8b739 !important; }
+    background: #494ca2 !important;
+    border-color: #494ca2 !important; }
 
 .footer p {
   color: rgba(255, 255, 255, 0.5); }
+
+.form-control {
+  height: 40px !important;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  border-radius: 4px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: transparent; }
+  .form-control:focus, .form-control:active {
+    border-color: #000; }
+  .form-control::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: rgba(255, 255, 255, 0.5); }
+  .form-control::-moz-placeholder {
+    /* Firefox 19+ */
+    color: rgba(255, 255, 255, 0.5); }
+  .form-control:-ms-input-placeholder {
+    /* IE 10+ */
+    color: rgba(255, 255, 255, 0.5); }
+  .form-control:-moz-placeholder {
+    /* Firefox 18- */
+    color: rgba(255, 255, 255, 0.5); }
+
+.subscribe-form .form-control {
+  background: #5356b1; }
