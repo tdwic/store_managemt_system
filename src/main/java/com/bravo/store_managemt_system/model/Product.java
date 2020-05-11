@@ -15,6 +15,7 @@ public class Product {
     private String productImageRef;
     private String productDescription;
     private int productRating;
+    private String productCategory;
 
     public int getProductId() {
         return productId;
@@ -70,5 +71,13 @@ public class Product {
 
     public void setProductRating(int productRating) {
         this.productRating = productRating;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
     }
 }
