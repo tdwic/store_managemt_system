@@ -5,6 +5,8 @@ import com.bravo.store_managemt_system.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ProductService {
 
@@ -27,5 +29,7 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-
+    public ArrayList<Product> getProduct(){
+        return (ArrayList<Product>) productRepository.findAll();
+    }
 }

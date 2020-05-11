@@ -56,6 +56,13 @@ class App extends Component{
                         <li>
                             <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
                         </li>
+                        <li>
+                            <Link to="#"><span className="fa fa-cogs mr-3"></span> Admin</Link>
+                        </li>
+                        <li>
+                            <Link to="#"><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
+                        </li>
+
                     </ul>
 
                     <div className="mb-5">
@@ -91,7 +98,7 @@ class App extends Component{
                         <Nav className="mr-auto">
                             <Nav.Link href="#features">Home</Nav.Link>
 
-                            <NavDropdown title="Item Categories" id="collasible-nav-dropdown" >
+                            <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
                                 <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.3">Category 3</NavDropdown.Item>
