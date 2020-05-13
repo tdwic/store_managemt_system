@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //Use to check the Admin Part.
-import Admin from "./Components/Admin/Admin";
+//import Admin from "./Components/Admin/Admin";
 //Used to check the admin part.
 // ReactDOM.render(<Admin />, document.getElementById('root'));
 
