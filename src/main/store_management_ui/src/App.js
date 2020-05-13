@@ -20,6 +20,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
+import Admin from "./Components/Admin/Admin";
 
 class App extends Component{
   // constructor(props){
@@ -57,7 +58,7 @@ class App extends Component{
                             <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
                         </li>
                         <li>
-                            <Link to="#"><span className="fa fa-cogs mr-3"></span> Admin</Link>
+                            <Link to={'#'}><span className="fa fa-cogs mr-3"></span> Admin</Link>
                         </li>
                         <li>
                             <Link to="#"><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
