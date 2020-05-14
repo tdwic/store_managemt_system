@@ -8,16 +8,39 @@ export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories : [
-                {
-                    catId : 1,
-                    catName:'Meat'
-                },
-                {
-                    catId : 2,
-                    catName:'Drinks'
-                }]
+            categoryName : '',
+            categories : [{
+                categoryName: 'piyal'
+            },{
+                categoryName:'Ashok'
+            }]
         }
+    }
+
+    //May have to change.
+    countValue = () =>{
+        let val = 0;
+        val += 1;
+        return val;
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.setState({
+                categoryName : event.target.value,
+        })
+
+        const cat = this.state.categoryName;
+        console.log("Category name is " , cat);
+        this.setState({
+            categoryName:''
+        })
+    }
+
+    handleOnChange = (event) => {
+        this.setState({
+            categoryName : event.target.value
+        })
     }
     render() {
         return(
@@ -30,10 +53,10 @@ export default class Category extends Component {
                     <div className='row'>
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
-                            <Form>
+                            <Form onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="StoreManagerNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Category :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Category" />
+                                    <Form.Control type="text" placeholder="Enter Category" onChange = {this.handleOnChange} value = {this.state.categoryName} />
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                     Add Category
@@ -58,8 +81,8 @@ export default class Category extends Component {
                         <tbody>
                         {this.state.categories.map(element =>
                             <tr>
-                                <td>{element.catId}</td>
-                                <td>{element.catName}</td>
+                                <td>{this.countValue()}</td>
+                                <td>{element.categoryName}</td>
                                 <td><Button variant="warning">Update</Button></td>
                                 <td><Button variant="danger">Delete</Button></td>
                             </tr>

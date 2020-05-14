@@ -21,6 +21,9 @@ import Col from "react-bootstrap/Col";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
 import Admin from "./Components/Admin/Admin";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import Category from "./Components/Admin/Category";
+import StoreManager from "./Components/Admin/StoreManager";
 
 class App extends Component{
   // constructor(props){
@@ -58,7 +61,7 @@ class App extends Component{
                             <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
                         </li>
                         <li>
-                            <Link to={'#'}><span className="fa fa-cogs mr-3"></span> Admin</Link>
+                            <Link to={'/AdminDashboard'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
                         </li>
                         <li>
                             <Link to="#"><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
@@ -131,6 +134,11 @@ class App extends Component{
                     <Route exact path='/WishList' component={WishList} />
                     <Route exact path='/Loging' component={Loging} />
                     <Route exact path='/SignUp' component={SignUp} />
+
+                    {/*Linking Admin Components*/}
+                    <Route exact path='/AdminDashboard' component={AdminDashboard} />
+                    <Route exact path='/Category' component={Category} />
+                    <Route exact path='/StoreManager' component={StoreManager} />
                 </Switch>
 
         </div>

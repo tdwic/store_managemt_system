@@ -24,6 +24,10 @@ export default class StoreManager extends Component {
         }
     }
 
+    handleSubmit = (event) =>{
+
+    }
+
     render(){
         return(
             <div>
@@ -35,7 +39,7 @@ export default class StoreManager extends Component {
                     <div className='row'>
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
-                            <Form>
+                            <Form onSubmit = {this.handleSubmit}>
                                 <Form.Group controlId="StoreManagerNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Store Manager Name :</Form.Label>
                                     <Form.Control type="text" placeholder="Enter Name" />

@@ -37,7 +37,7 @@ class Admin extends Component {
                                         <Link to={'/StoreManager'} className="nav-link">Add Store Manager</Link>
                                     </li>
                                     <li className='sidebarLi'>
-                                        <a href="#">Logout</a>
+                                        <Link to ={'/'}>Logout</Link>
                                     </li>
 
                                 </ul>
