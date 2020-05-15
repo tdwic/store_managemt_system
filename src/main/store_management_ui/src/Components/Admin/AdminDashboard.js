@@ -8,26 +8,64 @@ import { Row } from "react-bootstrap";
 import {CardImg} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Category from "./Category";
+import {CommonGet} from "../../config";
 
 export default class AdminDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            catCount : 0,
-            storeMCount:0,
             categories:[],
             storeManagers:[]
         }
     }
 
-    getCategoryCount = () =>{
-
+    componentDidMount() {
+        this.listAllCategories();
+        this.listAllStoreManagers();
+        //this.getCategoryCount();
 
     }
 
 
-    getStoreManagerCount = () => {
+    listAllCategories = () =>{
+        CommonGet('listCategoryDet','')
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    categories: json
+                })
+                console.log(this.state.categories);
+            });
+    }
 
+    listAllStoreManagers = () =>{
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json =>{
+                this.setState({
+                    storeManagers : json
+                })
+                console.log(this.state.storeManagers);
+            })
+    }
+
+    getCategoryCount = () =>{
+        let count = 0 ;
+        const  categories  = this.state.categories;
+        categories.forEach(element => {
+            count += 1;
+        });
+        return count;
+    }
+
+
+    getStoreManagerCount = () => {
+        let count = 0 ;
+        const  storeManagers  = this.state.storeManagers;
+        storeManagers.forEach(element => {
+            count += 1;
+        });
+        return count;
 
     }
     render() {
@@ -39,10 +77,10 @@ export default class AdminDashboard extends Component {
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
-                                    <Col sm><Card.Title>Count</Card.Title></Col>
+                                    <Col sm><Card.Title>{this.getCategoryCount()}</Card.Title></Col>
                                 </Row>
                                 <Row>
-                                    <Col lg><Button variant="info" size = "lg" ><Link to='/Category' style = {{fontColor:"white"}}>Add Category</Link></Button></Col>
+                                    <Col lg><Button style = {{color:"white"}}variant="info" size = "lg" ><Link to='/Category' style = {{fontColor:"white"}}>Add Category</Link></Button></Col>
                                 </Row>
                                 {/*<div className='float-left'>*/}
                                 {/*    <h5>Image comes here</h5>*/}
@@ -62,7 +100,7 @@ export default class AdminDashboard extends Component {
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
-                                    <Col sm><Card.Title>Count</Card.Title></Col>
+                                    <Col sm><Card.Title>{this.getStoreManagerCount()}</Card.Title></Col>
                                 </Row>
                                 <Row>
                                     <Col lg><Button variant="info" size = "lg"><Link to='/StoreManager'>Add Store Manager</Link></Button></Col>
