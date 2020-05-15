@@ -14,9 +14,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    public DATABASE_SEQUENCE_SERVICE dbSeqService;
-
 
     public Category insertNewCategoryService(Category category) {
         //dbSeqService.setTableCurrentNumber("table_cat_sequence");

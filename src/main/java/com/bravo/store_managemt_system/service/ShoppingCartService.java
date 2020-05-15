@@ -13,9 +13,6 @@ public class ShoppingCartService {
     public ShoppingCartRepository shoppingCartRepository ;
 
 
-    @Autowired
-    public DATABASE_SEQUENCE_SERVICE database_sequence_service;
-
     public ShoppingCart addNewItemService(ShoppingCart shoppingCart){
 //        SequenceGeneratorService sq = new SequenceGeneratorService();
 //        shoppingCart.setCartId(sq.generateSequence(shoppingCart.SEQUANCE_NAME));
