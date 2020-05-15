@@ -37,7 +37,6 @@ class App extends Component{
 
 
   render(){
-      let addModalClose = () => this.setState({addModalShow:false });
   return (
     <Router>
     <div className="App">
@@ -69,7 +68,7 @@ class App extends Component{
                             <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
                         </li>
                         <li>
-                            <Link to="#"><span className="fa fa-cogs mr-3"></span> Admin</Link>
+                            <Link to={'/AdminDashboard'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
                         </li>
                         <li>
                             <Link to="#"><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
@@ -132,11 +131,9 @@ class App extends Component{
                                         show ={this.state.addModalShow }
                                         onHide ={addModalClose}
 
-                                    />
-                                </ButtonToolbar>
                             </Nav.Link>
 
-                            <Nav.Link href="#memes">
+                            <Nav.Link href={'/Loging'}>
                                 <button type="button" className="btn btn-outline-primary">Login</button>
                             </Nav.Link>
 
@@ -153,6 +150,11 @@ class App extends Component{
                     <Route exact path='/WishList' component={WishList} />
                     <Route exact path='/Loging' component={Loging} />
                     <Route exact path='/SignUp' component={SignUp} />
+
+                    {/*Linking Admin Components*/}
+                    <Route exact path='/AdminDashboard' component={AdminDashboard} />
+                    <Route exact path='/Category' component={Category} />
+                    <Route exact path='/StoreManager' component={StoreManager} />
                 </Switch>
 
         </div>
