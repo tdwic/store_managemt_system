@@ -8,23 +8,34 @@ export default class StoreManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            storeMEmail : '',
+            storeMFName : '',
+            storeMLName : '',
+            storeMPwd : '' ,
             storeM : [
                 {
                     storeMId : 1,
                     storeMEmail:'IT18146516@my.sliiy.lk',
-                    storeMName:'Dewsara',
+                    storeMFName:'Dewsara',
                     storeMPwd:'abcd1234'
                 },
                 {
                     storeMId : 2,
                     storeMEmail:'IT18456871@my.sliiy.lk',
-                    storeMName:'Kamal',
+                    storeMFName:'Kamal',
                     storeMPwd:'abcd1234'
                 }]
         }
     }
 
     handleSubmit = (event) =>{
+
+    }
+
+    handleOnChange = (event) => {
+        const state = this.state
+        state[event.target.name] = event.target.value;
+        this.setState(state);
 
     }
 
@@ -40,13 +51,17 @@ export default class StoreManager extends Component {
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
                             <Form onSubmit = {this.handleSubmit}>
-                                <Form.Group controlId="StoreManagerNameTxt">
-                                    <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Store Manager Name :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Name" />
+                                <Form.Group controlId="StoreManagerFNameTxt">
+                                    <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>First Name :</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Name" name = "storeMFName" onChange={this.handleOnChange} value={this.state.storeMFName}  required/>
+                                </Form.Group>
+                                <Form.Group controlId="StoreManagerLNameTxt">
+                                    <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Last Name :</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Name" name = "storeMLName" onChange={this.handleOnChange} value={this.state.storeMLName} />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label style={{float:'left', fontSize:'20px',fontFamily:'Square Sans Serif'}}>Email address :</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" />
+                                    <Form.Control type="email" placeholder="Enter email" name = "storeMEmail" onChange={this.handleOnChange} value = {this.state.storeMEmail} required/>
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                     Add Store Manager
@@ -63,7 +78,8 @@ export default class StoreManager extends Component {
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Password</th>
                             <th>Update</th>
@@ -74,7 +90,8 @@ export default class StoreManager extends Component {
                         {this.state.storeM.map(element =>
                             <tr>
                                 <td>{element.storeMId}</td>
-                                <td>{element.storeMName}</td>
+                                <td>{element.storeMFName}</td>
+                                <td>{element.storeMLName}</td>
                                 <td>{element.storeMEmail}</td>
                                 <td>{element.storeMPwd}</td>
                                 <td><Button variant="warning">Update</Button></td>

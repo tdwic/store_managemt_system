@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card } from 'react-bootstrap';
+import {Card, ListGroup} from 'react-bootstrap';
 import {CardDeck} from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import {Media} from "react-bootstrap";
@@ -10,40 +10,39 @@ import Button from "react-bootstrap/Button";
 import Category from "./Category";
 
 export default class AdminDashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            catCount : 0,
+            storeMCount:0,
+            categories:[],
+            storeManagers:[]
+        }
+    }
+
+    getCategoryCount = () =>{
+
+
+    }
+
+
+    getStoreManagerCount = () => {
+
+
+    }
     render() {
         return(
-            <div>
-            <div>
-                <CardDeck>
-                    <Card>
-                        <Card.Header as="h5">Categories</Card.Header>
-                        <Card.Body>
-                            <Row>
-                                <Col sm><Card.Title>Image</Card.Title></Col>
-                                <Col sm><Button><Link to='/Category'>Add Category</Link> </Button></Col>
-                            </Row>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Header as="h5">Store Managers</Card.Header>
-                        <Card.Body>
-                            <Row>
-                                <Col sm><Card.Title>Image</Card.Title></Col>
-                                <Col sm><Button><Link to='/StoreManager'>Add Store Manager</Link> </Button></Col>
-                            </Row>
-                        </Card.Body>
-                    </Card>
-                </CardDeck>
-            </div>
-
                 <div>
                     <CardDeck>
                         <Card>
-                            <Card.Header as="h5">Number of Categories</Card.Header>
+                            <Card.Header as="h5">Category Details</Card.Header>
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
                                     <Col sm><Card.Title>Count</Card.Title></Col>
+                                </Row>
+                                <Row>
+                                    <Col lg><Button variant="info" size = "lg" ><Link to='/Category' style = {{fontColor:"white"}}>Add Category</Link></Button></Col>
                                 </Row>
                                 {/*<div className='float-left'>*/}
                                 {/*    <h5>Image comes here</h5>*/}
@@ -59,11 +58,14 @@ export default class AdminDashboard extends Component {
                             </Card.Body>
                         </Card>
                         <Card>
-                            <Card.Header as="h5">Number of Store Managers</Card.Header>
+                            <Card.Header as="h5">Store Manager Details</Card.Header>
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
                                     <Col sm><Card.Title>Count</Card.Title></Col>
+                                </Row>
+                                <Row>
+                                    <Col lg><Button variant="info" size = "lg"><Link to='/StoreManager'>Add Store Manager</Link></Button></Col>
                                 </Row>
                                 {/*<Card.Title>Special title treatment</Card.Title>*/}
                                 {/*<Card.Text>*/}
@@ -73,7 +75,6 @@ export default class AdminDashboard extends Component {
                         </Card>
                     </CardDeck>
                 </div>
-            </div>
         );
     }
 }
