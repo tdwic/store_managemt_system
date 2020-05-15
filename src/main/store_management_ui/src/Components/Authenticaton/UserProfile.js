@@ -17,29 +17,29 @@ class UserProfile extends Component {
  
 
 componentDidMount(){
- 
-var controller = 'demo';
-var val = '1';
-
-CommonGet(controller,val)
-      .then(res=>res.json())
-      .then(json =>{
-        this.setState({
-            isLoaded:true,
-            data: json
-        })
-      });
-
-let formData = {
-     name:"hi",
-     age: 15,
-     role:"admin"
-}
-var postcontroller = 'user'
-
-CommonPost(postcontroller,formData)
-    .then(response => response.json())
-    .then(data => this.setState({ postdata: data }));
+ console.log(this.props.valuexx);
+// var controller = 'demo';
+// var val = '1';
+//
+// CommonGet(controller,val)
+//       .then(res=>res.json())
+//       .then(json =>{
+//         this.setState({
+//             isLoaded:true,
+//             data: json
+//         })
+//       });
+//
+// let formData = {
+//      name:"hi",
+//      age: 15,
+//      role:"admin"
+// }
+// var postcontroller = 'user'
+//
+// CommonPost(postcontroller,formData)
+//     .then(response => response.json())
+//     .then(data => this.setState({ postdata: data }));
 
     // fetch('http://localhost:8181/demo/1')
     // .then(res=>res.json())

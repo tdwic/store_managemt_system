@@ -20,3 +20,29 @@ var api = 'http://localhost:8181';
        
     }
 
+export const CommonDeleteById = (controller, queryString) => {
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+
+    };
+
+    return fetch(api+'/'+controller+'/'+queryString,requestOptions);
+
+
+}
+export const CommonDeleteAll = (controller, requestbody) => {
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestbody)
+    };
+
+    return fetch(api+'/'+controller,requestOptions);
+
+
+}
+
+

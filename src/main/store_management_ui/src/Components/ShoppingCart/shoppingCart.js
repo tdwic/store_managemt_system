@@ -1,69 +1,152 @@
 import React, { Component } from 'react';
 import {Card} from "react-bootstrap";
-import StarRatings from "react-star-ratings/src";
-import { CommonGet , CommonPost} from '../../config';
+import { CommonGet , CommonPost , CommonDeleteAll ,CommonDeleteById} from '../../config';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import ListGroup from "react-bootstrap/ListGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import CardGroup from "react-bootstrap/CardGroup";
+import * as list from "react-bootstrap/cjs/ElementChildren";
 
 class shoppingCart extends Component {
     constructor(props){
         super(props);
-        this.state={
-            productSet:[],
+        this.state = {
+            ShoppingcartList: [],
             isLoaded: false,
+            total:0
         }
     }
 
-    changeRating( newRating, name ) {
-        this.setState({
-            rating: newRating
-        });
-    }
-    componentDidMount(){
-        CommonGet('product','')
+
+    componentDidMount() {
+        CommonGet('shoppingcart','')
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
                     isLoaded:true,
-                    productSet: json
+                    ShoppingcartList: json
                 })
             });
+    }
+
+    calcTotal() {
+        var totalprice = 0;
+        this.state.ShoppingcartList.map((item) => {
+
+            totalprice = totalprice +item.productPrice;
+        });
+        return totalprice;
 
     }
-    // renderproducts(productset){
-    //     let tableContent = (productset === undefined || productset === null || productset.length === 0) ? null : (
-    //         // todoarray.sort(function(a, b){return b.orderId - a.orderId}),
-    //
-    //         productset.map((todo) => {
-    //             return ();
-    //         }
-    //     return ();
-    // }))
+
+    renderShoppingCart(list) {
+
+            CommonGet('shoppingcart','')
+                .then(res=>res.json())
+                .then(json =>{
+                    this.setState({
+                        isLoaded:true,
+                        ShoppingcartList: json
+                    })
+                });
+
+
+
+        let tableContent = (list === undefined || list === null || list.length === 0) ? null : (
+
+            list.map((item) => {
+
+                return (
+                    <ListGroup.Item variant="success">
+                    <Row>
+                        <Col xs="7">
+                            {item.productName}
+                        </Col>
+                        <Col xs="4">
+                            {item.productPrice}
+                        </Col>
+                        <Col xs="1">
+                            <a href="#" className="ml-auto btn btn-danger btn-sm"  onClick={(event) => this.clearCartById(item.cartId,event)}>
+                                <span className="fa fa-trash"></span>
+                            </a>
+                        </Col>
+                    </Row>
+
+
+                </ListGroup.Item>
+                );
+
+
+            }));
+        return (
+
+            <ListGroup>
+                {tableContent}
+            </ListGroup>
+
+        );
+    }
+
+    clearCart = (event) => {
+        CommonDeleteAll('clearCart',"")
+            .then(res =>{
+                console.log("res",res);
+                this.setState({
+                    isLoaded:true,
+                })
+            });
+    };
+
+    clearCartById = (id,event) => {
+
+        CommonDeleteById('clearCartByItem',id)
+            .then(res =>{
+                console.log("res",res);
+                this.setState({
+                    isLoaded:true,
+                })
+            });
+    };
+
+
 
     render() {
-        let products = this.renderproducts(this.state.productSet);
+
+        let ShoppingCartList = this.renderShoppingCart(this.state.ShoppingcartList);
+
         return (
-            <Card  style={{ width: '18rem' }}>
-                <Card.Img variant="top" src='./Images/shoe.jpg' />
-                <Card.Body>
-                    <Card.Title>Item ABC</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </Card.Text>
-                    <div class="form-row">
-                        <a href="#" class="ml-auto btn btn-info btn-sm">
-                            <span class="fa fa-shopping-cart"></span> Add To Cart
-                        </a>
-                        <a href="#" class="ml-sm-3 btn btn-danger btn-sm">
-                            <span class="fa fa-heart-o"></span>
-                        </a>
-                    </div>
-                    <StarRatings
-        rating={2.403}
-        starDimension="40px"
-        starSpacing="15px"
-      />
-                </Card.Body>
-            </Card>
+            <Modal
+                {...this.props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        <i className="fa fa-shopping-cart"></i> Your Cart
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <label>Item Count - {this.state.ShoppingcartList.length}</label>
+                    {ShoppingCartList}
+                    <br/>
+
+                    <Row>
+                        <Col  xs={10}>
+                            <h5>Total = {this.calcTotal()}</h5>
+                        </Col>
+                        <Col  xs={2}>
+                            <Button variant="danger" onClick={(event) => this.clearCart(event)}>Clear Cart</Button>
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="success" onClick={this.props.onHide}>Place Order</Button>
+                    <Button variant="danger" onClick={this.props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
 
 
         );

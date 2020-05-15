@@ -1,19 +1,30 @@
-import React, { Component } from 'react';
+import React, {Component, useState} from 'react';
 import { Card, Row } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import {CommonGet} from "../../config";
+import {CommonGet, CommonPost} from "../../config";
 import CardDeck from "react-bootstrap/CardDeck";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import CardGroup from "react-bootstrap/CardGroup";
 // import StarRatings from 'react-star-ratings';
-
+import empimg from '../../Images/noimg.jpg';
+import img1 from '../../Images/img01.jpg';
+import img2 from '../../Images/img02.jpg';
+import img5 from '../../Images/img00.jpg';
+import Carousel from "react-bootstrap/Carousel";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Badge from "react-bootstrap/Badge";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 class Home extends Component {
-
-        state={
-            productSet:[],
+    constructor(props) {
+        super(props);
+        this.state = {
+            productSet: [],
             isLoaded: false,
+            valuexx:5
         }
+    }
 
 
     changeRating( newRating, name ) {
@@ -23,6 +34,7 @@ class Home extends Component {
       }
 
     componentDidMount(){
+
         CommonGet('product','')
             .then(res=>res.json())
             .then(json =>{
@@ -33,6 +45,57 @@ class Home extends Component {
             });
 
     }
+
+    addToCart = (product,event) => {
+
+      let formData=
+        {
+            "cartId": "",
+            "productId": product.productId,
+            "productName": product.productName,
+            "productPrice": product.productPrice,
+            "productDiscount": product.productDiscount
+        }
+
+
+        CommonPost('shoppingcart',formData)
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded:true,
+
+                })
+            });
+
+        toast("Successfully Added to Your Cart!");
+
+    };
+
+    addToWishList = (product,event) => {
+
+        let formData=
+            {
+                "wishListId": "",
+                "userId": "",
+                "productId": product.productId,
+                "productName": product.productName,
+                "productPrice": product.productPrice,
+                "productDiscount": product.productDiscount
+            }
+
+
+        CommonPost('wishListAdd',formData)
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded:true,
+
+                })
+            });
+
+        toast("Added to WishList!");
+
+    };
  renderproducts(productset) {
      let tableContent = (productset === undefined || productset === null || productset.length === 0) ? null : (
 
@@ -40,22 +103,52 @@ class Home extends Component {
                 return (
                     <Col xs="4">
                     <Card>
-                        <Card.Img variant="top" src="holder.js/100px160" />
+                        <Card.Img variant="top" src={empimg} rounded />
                         <Card.Body>
                             <Card.Title>{product.productName}</Card.Title>
                             <Card.Text>
-                                This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.
+                               <p> This is a wider card with supporting text below as a natural lead-in to
+                                   additional content. This content is a little bit longer.</p>
+
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer>
-                            <Card.Title>Rs.{product.productPrice}</Card.Title>
-                            <a href="#" className="ml-auto btn btn-info btn-sm">
-                                 <span className="fa fa-shopping-cart"></span> Add To Cart
-                                 </a>
-                             <a href="#" className="ml-sm-3 btn btn-danger btn-sm">
-                             <span className="fa fa-heart-o"></span>
-                             </a>
+                            <Row>
+                                <Col  xs={8} md={8}>
+                                    <Card.Title>Rs.{product.productPrice}</Card.Title>
+                                </Col>
+                                <Col xs={2} md={1}>
+                                    {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
+                                    {/*   onClick={(event) => this.addToCart(product, event)}*/}
+                                    {/*>*/}
+                                    {/*    <span className="fa fa-shopping-cart"></span>*/}
+                                    {/*</a>*/}
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-success"
+                                        onClick={(event) => this.addToCart(product, event)}
+                                    ><i className="fa fa-shopping-cart"></i>
+
+                                    </button>
+                                </Col>
+                                &nbsp; &nbsp; &nbsp;
+                                <Col xs={2} md={1}>
+                                    {/*<a href="#" className="ml-sm-3 btn btn-danger btn-sm">*/}
+                                    {/*    <span className="fa fa-heart-o"></span>*/}
+                                    {/*</a>*/}
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger"
+                                        onClick={(event) => this.addToWishList(product, event)}
+                                    ><i className="fa fa-heart-o"></i>
+
+                                    </button>
+                                </Col>
+                            </Row>
+
+
+
                         </Card.Footer>
                     </Card>
                         <br/>
@@ -78,7 +171,62 @@ class Home extends Component {
 
     return (
 
-        <div>{products} </div>
+         <div>
+             <Carousel>
+                 <Carousel.Item>
+                     <img
+                         className="d-block w-100 "
+                         src={img1}
+                         alt="First slide"
+                     />
+                     <Carousel.Caption>
+                         <h3>E-Shopping Center</h3>
+                         <p class="text-dark">Shopping From Home, Without Wasting Your Time !</p>
+                     </Carousel.Caption>
+                 </Carousel.Item>
+                 <Carousel.Item>
+                     <img
+                         className="d-block w-100 "
+                         src={img2}
+                         alt="Third slide"
+                     />
+
+                     <Carousel.Caption>
+                         <h3>Fast Delivery Every Where!</h3>
+                         <p class="text-dark">24x7 Island Wide Delivery Service! </p>
+                     </Carousel.Caption>
+                 </Carousel.Item>
+                 <Carousel.Item>
+                     <img
+                         className="d-block w-100"
+                         src={img5}
+                         alt="Third slide"
+                     />
+
+                     <Carousel.Caption>
+                         <h3>Quality Products</h3>
+                         <p class="text-dark">World Famouse Top Rated Brands!</p>
+                     </Carousel.Caption>
+                 </Carousel.Item>
+             </Carousel>
+         <br/>
+          {products}
+             <ToastContainer
+                 position="bottom-right"
+                 autoClose={5000}
+                 hideProgressBar={false}
+                 newestOnTop={false}
+                 closeOnClick
+                 rtl={false}
+                 pauseOnFocusLoss
+                 draggable
+                 pauseOnHover
+             />
+             {/* Same as */}
+
+         </div>
+
+
 
     );
   }

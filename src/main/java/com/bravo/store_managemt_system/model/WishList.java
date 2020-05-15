@@ -1,27 +1,32 @@
 package com.bravo.store_managemt_system.model;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-
-@Document(collection = "ShoppingCart")
-public class ShoppingCart {
-
+@Document(collection = "WishList")
+public class WishList {
 
     @Id
-    private  String cartId;
+    private  String wishListId;
+    private String userId;
     private int productId;
     private String productName;
     private double productPrice;
     private double productDiscount;
 
-    public String getCartId() {
-        return cartId;
+    public String getwishListId() {
+        return wishListId;
     }
 
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
+    public void setwishListId(String cartId) {
+        this.wishListId = cartId;
+    }
+
+    public String getuserId() {
+        return userId;
+    }
+
+    public void setuserId(String userId) {
+        this.userId = userId;
     }
 
     public int getProductId() {

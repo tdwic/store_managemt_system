@@ -20,12 +20,24 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import ShoppingCart from "./Components/ShoppingCart/shoppingCart";
 
 class App extends Component{
-  // constructor(props){
-  //   super(props);
-  // }
+    constructor()
+    {
+    super()
+        this.state={
+            unit:0,
+            addModalShow:false,
+            cartList:[]
+        }
+
+    }
+
+
   render(){
+      let addModalClose = () => this.setState({addModalShow:false });
   return (
     <Router>
     <div className="App">
@@ -94,7 +106,7 @@ class App extends Component{
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#features">Home</Nav.Link>
+                            <Nav.Link href={'/Home'}>Home</Nav.Link>
                                 <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
                                 <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
@@ -102,15 +114,26 @@ class App extends Component{
                                 <NavDropdown.Divider />
                                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                 </NavDropdown>
-                            <Nav.Link href="#deets">Wish List</Nav.Link>
+                            <Nav.Link href={'WishList'}>Wish List</Nav.Link>
                         </Nav>
 
                         <Nav>
-                            <Nav.Link href="#memes">
-                                <button type="button" className="btn btn-outline-success"><i className="fa fa-shopping-cart"></i>
-                                    &nbsp; <Badge variant="light">2</Badge>
-                                </button>
+                            <Nav.Link>
+                                <ButtonToolbar>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-success"
+                                        onClick ={() => this.setState({addModalShow:true})}
+                                    ><i className="fa fa-shopping-cart"></i>
+                                    &nbsp;
+                                        <Badge variant="light">2</Badge>
+                                     </button>
+                                    <ShoppingCart
+                                        show ={this.state.addModalShow }
+                                        onHide ={addModalClose}
 
+                                    />
+                                </ButtonToolbar>
                             </Nav.Link>
 
                             <Nav.Link href="#memes">
