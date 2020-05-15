@@ -3,18 +3,18 @@ package com.bravo.store_managemt_system.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "category")
+@Document(collection = "category")
 public class Category {
 
     @Id
-    private int categoryId ;
+    private String categoryId ;
     private String categoryName;
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

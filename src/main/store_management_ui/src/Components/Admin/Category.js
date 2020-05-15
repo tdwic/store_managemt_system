@@ -3,18 +3,42 @@ import { Table } from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
+import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 
 export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categoryName : '',
-            categories : [{
-                categoryName: 'piyal'
-            },{
-                categoryName:'Ashok'
-            }]
+            categoryName: '',
+            categories: [] ,
+            isLoaded : false
         }
+    }
+
+    componentDidMount() {
+        // CommonGet('listCategoryDet','')
+        //     .then(res=>res.json())
+        //     .then(json =>{
+        //         this.setState({
+        //             isLoaded:true,
+        //             categories: json
+        //         })
+        //         console.log(this.state.categories);
+        //     });
+        this.listCategoryItem();
+
+    }
+
+    listCategoryItem(){
+        CommonGet('listCategoryDet','')
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded:true,
+                    categories: json
+                })
+                console.log(this.state.categories);
+            });
     }
 
     //May have to change.
@@ -25,22 +49,37 @@ export default class Category extends Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({
-                categoryName : event.target.value,
-        })
+        const { categoryName} = this.state;
 
-        const cat = this.state.categoryName;
-        console.log("Category name is " , cat);
-        this.setState({
-            categoryName:''
-        })
+        CommonPost('addCategory',{categoryName})
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded : true
+
+                })
+            });
+
+
     }
 
     handleOnChange = (event) => {
         this.setState({
             categoryName : event.target.value
         })
+    }
+
+
+
+    handleOnDelete =(id,event) =>{
+        CommonDeleteById('category', id)
+            .then(res => {
+                console.log("res", res);
+                this.setState({
+                    isLoaded: true,
+                })
+                this.componentDidMount();
+            })
     }
     render() {
         return(
@@ -56,7 +95,7 @@ export default class Category extends Component {
                             <Form onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="StoreManagerNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Category :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Category" onChange = {this.handleOnChange} value = {this.state.categoryName} />
+                                    <Form.Control type="text" placeholder="Enter Category" name = "categoryName" onChange = {this.handleOnChange} value = {this.state.categoryName} required />
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                     Add Category
@@ -80,11 +119,11 @@ export default class Category extends Component {
                         </thead>
                         <tbody>
                         {this.state.categories.map(element =>
-                            <tr>
+                            <tr key={element.categoryId}>
                                 <td>{this.countValue()}</td>
                                 <td>{element.categoryName}</td>
                                 <td><Button variant="warning">Update</Button></td>
-                                <td><Button variant="danger">Delete</Button></td>
+                                <td><Button onClick={(event) => this.handleOnDelete(element.categoryId,event)} variant="danger">Delete</Button></td>
                             </tr>
                         )}
 
