@@ -21,7 +21,7 @@ export default class AdminDashboard extends Component {
 
     componentDidMount() {
         this.listAllCategories();
-        this.listAllStoreManagers();
+        //this.listAllStoreManagers();
         //this.getCategoryCount();
 
     }
@@ -38,16 +38,16 @@ export default class AdminDashboard extends Component {
             });
     }
 
-    listAllStoreManagers = () =>{
-        CommonGet('user','')
-            .then(res => res.json())
-            .then(json =>{
-                this.setState({
-                    storeManagers : json
-                })
-                console.log(this.state.storeManagers);
-            })
-    }
+    // listAllStoreManagers = () =>{
+    //     CommonGet('user','')
+    //         .then(res => res.json())
+    //         .then(json =>{
+    //             this.setState({
+    //                 storeManagers : json
+    //             })
+    //             console.log(this.state.storeManagers);
+    //         })
+    // }
 
     getCategoryCount = () =>{
         let count = 0 ;
@@ -59,15 +59,15 @@ export default class AdminDashboard extends Component {
     }
 
 
-    getStoreManagerCount = () => {
-        let count = 0 ;
-        const  storeManagers  = this.state.storeManagers;
-        storeManagers.forEach(element => {
-            count += 1;
-        });
-        return count;
-
-    }
+    // getStoreManagerCount = () => {
+    //     let count = 0 ;
+    //     const  storeManagers  = this.state.storeManagers;
+    //     storeManagers.forEach(element => {
+    //         count += 1;
+    //     });
+    //     return count;
+    //
+    // }
     render() {
         return(
                 <div>
@@ -100,7 +100,7 @@ export default class AdminDashboard extends Component {
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
-                                    <Col sm><Card.Title>{this.getStoreManagerCount()}</Card.Title></Col>
+                                    <Col sm><Card.Title>count</Card.Title></Col>
                                 </Row>
                                 <Row>
                                     <Col lg><Button variant="info" size = "lg"><Link to='/StoreManager'>Add Store Manager</Link></Button></Col>
