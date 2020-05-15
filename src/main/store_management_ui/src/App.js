@@ -22,7 +22,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ShoppingCart from "./Components/ShoppingCart/shoppingCart";
-
+import Admin from "./Components/Admin/Admin";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import Category from "./Components/Admin/Category";
+import StoreManager from "./Components/Admin/StoreManager";
 class App extends Component{
     constructor()
     {
@@ -37,6 +40,7 @@ class App extends Component{
 
 
   render(){
+      let addModalClose = () => this.setState({addModalShow:false });
   return (
     <Router>
     <div className="App">
@@ -129,7 +133,7 @@ class App extends Component{
                                      </button>
                                     <ShoppingCart
                                         show ={this.state.addModalShow }
-                                        onHide ={addModalClose}
+                                        onHide ={addModalClose}></ShoppingCart></ButtonToolbar>
 
                             </Nav.Link>
 
