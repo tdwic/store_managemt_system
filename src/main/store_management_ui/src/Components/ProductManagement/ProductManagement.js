@@ -10,6 +10,7 @@ class ProductManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             productName: '',
             productList: [] ,
             isLoaded : false
@@ -30,6 +31,18 @@ class ProductManagement extends Component {
             })
             console.log(this.state.productList);
         });
+    }
+
+    addNewProduct(product){
+        let newProduct = {
+            // productName
+            // productPrice
+            // productDiscount
+            // productImageRef
+            // productDescription
+            // productRating
+            // productCategory
+        }
     }
 
     removeProductById(productId){
@@ -109,9 +122,9 @@ class ProductManagement extends Component {
                 
                 <hr/>
                 <br/>
-                
+
                 <div>
-                    <Table hover responsive>
+                    <Table striped bordered hover>
                             <thead>
                             <tr>
                                 <th>Id</th>
