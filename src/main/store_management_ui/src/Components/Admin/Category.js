@@ -41,13 +41,6 @@ export default class Category extends Component {
             });
     }
 
-    //May have to change.
-    countValue = () =>{
-        let val = 0;
-        val += 1;
-        return val;
-    }
-
     handleSubmit = (event) => {
         const { categoryName} = this.state;
 
@@ -118,9 +111,9 @@ export default class Category extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.categories.map(element =>
+                        {this.state.categories.map((element, index) =>
                             <tr key={element.categoryId}>
-                                <td>{this.countValue()}</td>
+                                <td>{index + 1}</td>
                                 <td>{element.categoryName}</td>
                                 <td><Button variant="warning">Update</Button></td>
                                 <td><Button onClick={(event) => this.handleOnDelete(element.categoryId,event)} variant="danger">Delete</Button></td>

@@ -15,15 +15,14 @@ export default class AdminDashboard extends Component {
         super(props);
         this.state = {
             categories:[],
+            users:[],
             storeManagers:[]
         }
     }
 
     componentDidMount() {
         this.listAllCategories();
-        //this.listAllStoreManagers();
-        //this.getCategoryCount();
-
+        this.listAllStoreManagers();
     }
 
 
@@ -34,40 +33,35 @@ export default class AdminDashboard extends Component {
                 this.setState({
                     categories: json
                 })
-                console.log(this.state.categories);
             });
     }
 
-    // listAllStoreManagers = () =>{
-    //     CommonGet('user','')
-    //         .then(res => res.json())
-    //         .then(json =>{
-    //             this.setState({
-    //                 storeManagers : json
-    //             })
-    //             console.log(this.state.storeManagers);
-    //         })
-    // }
+    listAllStoreManagers = () =>{
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json =>{
+                this.setState({
+                    users : json
+                })
+                const usersList = this.state.users;
+                const storeM = usersList.filter(person => person.role === 2);
+                this.setState({
+                    storeManagers : storeM
+                })
+            })
+    }
 
     getCategoryCount = () =>{
-        let count = 0 ;
-        const  categories  = this.state.categories;
-        categories.forEach(element => {
-            count += 1;
-        });
+        const  count  = this.state.categories.length;
         return count;
     }
 
 
-    // getStoreManagerCount = () => {
-    //     let count = 0 ;
-    //     const  storeManagers  = this.state.storeManagers;
-    //     storeManagers.forEach(element => {
-    //         count += 1;
-    //     });
-    //     return count;
-    //
-    // }
+    getStoreManagerCount = () => {
+        const  count  = this.state.storeManagers.length;
+        return count;
+
+    }
     render() {
         return(
                 <div>
@@ -100,7 +94,7 @@ export default class AdminDashboard extends Component {
                             <Card.Body>
                                 <Row>
                                     <Col sm><Card.Title>Image</Card.Title></Col>
-                                    <Col sm><Card.Title>count</Card.Title></Col>
+                                    <Col sm><Card.Title>{this.getStoreManagerCount()}</Card.Title></Col>
                                 </Row>
                                 <Row>
                                     <Col lg><Button variant="info" size = "lg"><Link to='/StoreManager'>Add Store Manager</Link></Button></Col>
