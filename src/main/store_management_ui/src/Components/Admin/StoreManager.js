@@ -1,42 +1,109 @@
 import React, {Component} from 'react';
-import { Table } from "react-bootstrap";
+import {Table, Toast} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
+import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 
 export default class StoreManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            storeMEmail : '',
-            storeMFName : '',
-            storeMLName : '',
-            storeMPwd : '' ,
-            storeM : [
-                {
-                    storeMId : 1,
-                    storeMEmail:'IT18146516@my.sliiy.lk',
-                    storeMFName:'Dewsara',
-                    storeMPwd:'abcd1234'
-                },
-                {
-                    storeMId : 2,
-                    storeMEmail:'IT18456871@my.sliiy.lk',
-                    storeMFName:'Kamal',
-                    storeMPwd:'abcd1234'
-                }]
+            firstname : '',
+            lastname : '',
+            email : '',
+            role: 2 ,
+            storeManagers : [],
+            users:[],
+            isLoaded : false
         }
+
+        // THis is the previous state type which is used in here.
+        // But it did not allow setState the generatedPassword.
+        // this.state = {
+        //     firstname : '',
+        //     lastname : '',
+        //     email : '',
+        //     password : '',
+        //     role: 2 ,
+        //     storeManagers : [],
+        //     users:[],
+        //     isLoaded : false
+        // }
+    }
+
+    componentDidMount() {
+        //Works. But have to check with the DB
+        this.listStoreManagers();
+
+    }
+
+
+
+    generateStoreManagerPassword(genEm){
+        let randomNumber = Math.floor(Math.random() * 101);
+        let firstPart = genEm.substring(0,4);
+        let genPassword = `${firstPart}#pwd#${randomNumber}`;
+        return genPassword;
+
+    }
+
+    //Check The working with the backend
+    listStoreManagers(){
+        CommonGet('user','')
+            .then(res=>res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded:true,
+                    users : json
+                })
+                const usersList = this.state.users;
+                const storeM = usersList.filter(person => person.role === 2);
+                this.setState({
+                    storeManagers : storeM
+                })
+
+            });
     }
 
     handleSubmit = (event) =>{
+        // let randomNumber = Math.floor(Math.random() * 101);
+        // let firstPart = this.state.email.substring(0,4);
+        // let genPassword = `${firstPart}#pwd#${randomNumber}`;
 
-    }
+        //Password is generated Because we haven't use it in states.
+        let val = this.generateStoreManagerPassword(this.state.email);
+
+        console.log("Set Password: ", val);
+        console.log("Set Email: ", this.state.email);
+
+        const {firstname , lastname, email , password = val, role } = this.state;
+        CommonPost('user' ,{firstname , lastname, email , password, role})
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true
+                });
+            })
+        ;
+    };
 
     handleOnChange = (event) => {
         const state = this.state
         state[event.target.name] = event.target.value;
         this.setState(state);
 
+    }
+
+    handleOnDelete = (id , event) =>{
+        CommonDeleteById('user' , id)
+            .then(res => {
+                console.log("res " , res);
+                this.setState({
+                    isLoaded:true
+                });
+                this.componentDidMount();
+            })
     }
 
     render(){
@@ -53,17 +120,17 @@ export default class StoreManager extends Component {
                             <Form onSubmit = {this.handleSubmit}>
                                 <Form.Group controlId="StoreManagerFNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>First Name :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Name" name = "storeMFName" onChange={this.handleOnChange} value={this.state.storeMFName}  required/>
+                                    <Form.Control type="text" placeholder="Enter Name" name = "firstname" onChange={this.handleOnChange} value={this.state.firstname}  required/>
                                 </Form.Group>
                                 <Form.Group controlId="StoreManagerLNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Last Name :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Name" name = "storeMLName" onChange={this.handleOnChange} value={this.state.storeMLName} />
+                                    <Form.Control type="text" placeholder="Enter Name" name = "lastname" onChange={this.handleOnChange} value={this.state.lastname} required/>
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label style={{float:'left', fontSize:'20px',fontFamily:'Square Sans Serif'}}>Email address :</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" name = "storeMEmail" onChange={this.handleOnChange} value = {this.state.storeMEmail} required/>
+                                    <Form.Control type="email" placeholder="Enter email" name = "email" onChange={this.handleOnChange} value = {this.state.email} />
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button  variant="success" type="submit">
                                     Add Store Manager
                                 </Button>
                             </Form>
@@ -87,15 +154,15 @@ export default class StoreManager extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.storeM.map(element =>
-                            <tr>
-                                <td>{element.storeMId}</td>
-                                <td>{element.storeMFName}</td>
-                                <td>{element.storeMLName}</td>
-                                <td>{element.storeMEmail}</td>
-                                <td>{element.storeMPwd}</td>
+                        {this.state.storeManagers.map((element, index) =>
+                            <tr key={element.id}>
+                                <td>{index + 1}</td>
+                                <td>{element.firstname}</td>
+                                <td>{element.lastname}</td>
+                                <td>{element.email}</td>
+                                <td>{element.password}</td>
                                 <td><Button variant="warning">Update</Button></td>
-                                <td><Button variant="danger">Delete</Button></td>
+                                <td><Button onClick = {(event) =>this.handleOnDelete(element.id,event)} variant="danger">Delete</Button></td>
                             </tr>
                         )}
 
