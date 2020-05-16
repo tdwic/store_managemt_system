@@ -1,0 +1,13 @@
+.mainForm{
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.prodDescription{
+    min-height: 10rem;
+}
+
+.imageOuter{
+    border: 2px black solid;
+    min-height: 10rem;
+}
