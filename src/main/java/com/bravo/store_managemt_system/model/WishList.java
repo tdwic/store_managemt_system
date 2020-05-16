@@ -8,7 +8,7 @@ public class WishList {
     @Id
     private  String wishListId;
     private String userId;
-    private int productId;
+    private String productId;
     private String productName;
     private double productPrice;
     private double productDiscount;
@@ -29,11 +29,11 @@ public class WishList {
         this.userId = userId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
