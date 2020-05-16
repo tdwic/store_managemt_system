@@ -26,6 +26,7 @@ import Admin from "./Components/Admin/Admin";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import Category from "./Components/Admin/Category";
 import StoreManager from "./Components/Admin/StoreManager";
+import ProductManagement from './Components/ProductManagement/ProductManagement';
 class App extends Component{
     constructor()
     {
@@ -75,7 +76,7 @@ class App extends Component{
                             <Link to={'/AdminDashboard'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
                         </li>
                         <li>
-                            <Link to="#"><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
+                            <Link to={'/ProductManagement'}><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
                         </li>
 
                     </ul>
@@ -159,6 +160,10 @@ class App extends Component{
                     <Route exact path='/AdminDashboard' component={AdminDashboard} />
                     <Route exact path='/Category' component={Category} />
                     <Route exact path='/StoreManager' component={StoreManager} />
+
+                    {/*Product Management Linked Components */}
+                    <Route exact path='/ProductManagement' component={ProductManagement}/>
+
                 </Switch>
 
         </div>
