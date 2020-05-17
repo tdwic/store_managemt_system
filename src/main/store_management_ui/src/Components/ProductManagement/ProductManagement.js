@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import './ProductManagement.css'
 import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
 
 
 class ProductManagement extends Component {
@@ -30,6 +32,11 @@ class ProductManagement extends Component {
     }
 
     componentDidMount(){
+
+        toast.error("ss");
+            toast.success("sssgg");
+            toast.warn("dfdssf");
+            toast.info("ssd");
 
         this.setState({
             productName:'',
@@ -58,7 +65,7 @@ class ProductManagement extends Component {
     }
 
     fetchCategoryList(){
-        CommonGet('listCategoryDet','')
+        CommonGet('category','')
         .then(res=>res.json())
         .then(resultSet =>{
             this.setState({
@@ -72,7 +79,6 @@ class ProductManagement extends Component {
     productCommonFormController = (event) => {
 
         if(this.state.productId === ''){
-            console.log("No ID = ADD Working");
 
             let formData={
                     "productName":this.state.productName,
@@ -84,14 +90,24 @@ class ProductManagement extends Component {
                     "productCategory":this.state.productCategory
             }
 
-            CommonPost('product',formData)
+            if( formData.productName !== '' &&  formData.productPrice !== '' && formData.productDiscount !== '' && formData.productImageRef !== '' && formData.productDescription !== '' && formData.productRating !== '' && formData.productCategory !== ''){
+                console.log("new Product adding");
+                console.log(formData);
+                CommonPost('product',formData)
                 .then(res=>res.json())
                 .then(json =>{
+                    
                     this.setState({
                         isLoaded : true
                     })
+                    toast.success("Product Added Sucessfully!");
                     this.componentDidMount();
-            });
+                });
+            }else{
+                toast.error("Please Fill All the Fields Before Add Product!");
+            }
+
+            
 
         }else{
             console.log("false");
@@ -108,14 +124,26 @@ class ProductManagement extends Component {
                 // "productCategory":this.state.productCategory
             }
 
-            CommonPost('product',productDataToUpdate)
-                .then(res=>res.json())
-                .then(json =>{
-                    this.setState({
-                        isLoaded : true
-                    })
-                    this.componentDidMount();
-            });
+            
+
+            if( productDataToUpdate.productId !== '' && productDataToUpdate.productName !== '' && productDataToUpdate.productPrice !== '' && productDataToUpdate.productDiscount !== '' && 
+                productDataToUpdate.productImageRef !== '' && 
+                productDataToUpdate.productDescription !== '' && 
+                productDataToUpdate.productRating !== '' && 
+                productDataToUpdate.productCategory !== ''){
+                console.log("product updating");
+                toast("Successfully Added to Your Cart!");
+                    CommonPost('product',productDataToUpdate)
+                        .then(res=>res.json())
+                        .then(json =>{
+                            this.setState({
+                                isLoaded : true
+                            })
+                            this.componentDidMount();
+                        });
+            }else{
+                toast.error("Please Fill All the Fields Before Updating the Product!");
+            }  
 
 
         }
@@ -173,7 +201,8 @@ class ProductManagement extends Component {
         return (
             <div className="mainDiv">
                 <div>
-                    <Form className="mainForm" onSubmit={this.productCommonFormController}>
+                    {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
+                    <Form className="mainForm">   
 
                         <Form.Row>
                             <Form.Group as={Col}>
@@ -205,7 +234,6 @@ class ProductManagement extends Component {
 
                             <Form.Group as={Col} >
                                 <Form.Label>Product Category</Form.Label>
-                                {/* <Form.Control name='productCategory' value={this.state.productCategory} onChange={this.handleChange} type="text" placeholder="Enter Product Category" /> */}
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         <option key={category.categoryId} value={category.categoryId}>
@@ -213,12 +241,12 @@ class ProductManagement extends Component {
                                         </option>
                                     ))}
                                 </Form.Control>
-                               
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                 
                                 <Form.Label>Product Image</Form.Label>
+                                <Form.Control as="file"></Form.Control>
                                 {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
                             
                             </Form.Group>
@@ -239,11 +267,11 @@ class ProductManagement extends Component {
                                     {
                                         this.state.editEnable?
                                         <div>
-                                            <Button type="submit" variant="warning">Save Changes</Button>
+                                            <Button variant="warning" onClick={this.productCommonFormController}>Save Changes</Button>
                                         </div>
                                         :
                                         <div>
-                                            <Button type="submit" variant="success">Add Product</Button>
+                                            <Button variant="success"  onClick={this.productCommonFormController}>Add Product</Button>
                                         </div>
                                     }
                                     
@@ -254,7 +282,19 @@ class ProductManagement extends Component {
 
                         </Form>
                 </div>
-                
+                <ToastContainer
+                className="mainToast"
+                 position="bottom-right"
+                 autoClose={3000}
+                 backgroundColor="red"
+                 hideProgressBar={true}
+                 newestOnTop={false}
+                 closeOnClick
+                 rtl={false}
+                 pauseOnFocusLoss
+                 draggable
+                 pauseOnHover
+                />
                 <hr/>
                 <br/>
 
