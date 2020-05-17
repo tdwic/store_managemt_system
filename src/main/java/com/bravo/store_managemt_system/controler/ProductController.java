@@ -33,6 +33,9 @@ public class ProductController {
 
       productService.removeProduct(productId);
 
+
+
+
    }
 
    @RequestMapping(value = "/product", method = RequestMethod.GET)

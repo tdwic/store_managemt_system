@@ -4,7 +4,7 @@ import './App.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card } from 'react-bootstrap';
+import {Card, Row} from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
@@ -27,6 +27,11 @@ import AdminDashboard from "./Components/Admin/AdminDashboard";
 import Category from "./Components/Admin/Category";
 import StoreManager from "./Components/Admin/StoreManager";
 import ProductManagement from './Components/ProductManagement/ProductManagement';
+import {CommonGet, CommonPost} from "./config";
+
+import CardGroup from "react-bootstrap/CardGroup";
+import CategoryShow from "./Components/Category/CategoryRender"
+import {toast} from "react-toastify";
 class App extends Component{
     constructor()
     {
@@ -34,14 +39,63 @@ class App extends Component{
         this.state={
             unit:0,
             addModalShow:false,
-            cartList:[]
+            cartList:[],
+            categories:[],
+            id:""
         }
 
+    }
+    componentDidMount(){
+
+        CommonGet('listCategoryDet','')
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded:true,
+                    categories: json
+                })
+
+            });
+
+    }
+    navigate = (id,event) => {
+
+       const x = id.toString();
+
+       window.sessionStorage.setItem("YOLO:",x);
+
+        // this.setState({
+        //     id: id
+        // })
+
+    };
+
+    rendercategoryDropDown(category) {
+        let categoryContent = (category === undefined || category === null || category.length === 0) ? null : (
+
+            category.map((category) => {
+                return (
+
+                    <NavDropdown.Item href =   {'/categoryshow'} onClick={(event) => this.navigate(category.categoryId, event)} >
+                        {category.categoryName}
+
+                    </NavDropdown.Item>
+
+                );
+            }));
+        return (
+
+            <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
+                {categoryContent}
+
+            </NavDropdown>
+        );
     }
 
 
   render(){
       let addModalClose = () => this.setState({addModalShow:false });
+      let renderDropDown = this.rendercategoryDropDown(this.state.categories);
   return (
     <Router>
     <div className="App">
@@ -111,13 +165,7 @@ class App extends Component{
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href={'/Home'}>Home</Nav.Link>
-                                <NavDropdown title="Item Categories " id="collasible-nav-dropdown" >
-                                <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Category 3</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                </NavDropdown>
+                            {renderDropDown}
                             <Nav.Link href={'WishList'}>Wish List</Nav.Link>
                         </Nav>
 
@@ -163,7 +211,8 @@ class App extends Component{
 
                     {/*Product Management Linked Components */}
                     <Route exact path='/ProductManagement' component={ProductManagement}/>
-
+                    {/*Category show method*/}
+                    <Route exact path="/categoryshow" component={CategoryShow} />
                 </Switch>
 
         </div>
@@ -172,5 +221,8 @@ class App extends Component{
     </Router>
   );
 }
+
+
+
 }
 export default App;
