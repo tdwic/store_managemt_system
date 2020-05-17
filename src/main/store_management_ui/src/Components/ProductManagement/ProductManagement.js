@@ -73,8 +73,7 @@ class ProductManagement extends Component {
                 "productDiscount":this.state.productDiscount,
                 "productImageRef":"this.state.pro",
                 "productDescription":this.state.prodDescription,
-                "productRating":2,
-                //"productRating":this.state.productRating,
+                "productRating":this.state.productRating,
                 "productCategory":this.state.productCategory
         }
 
@@ -111,7 +110,18 @@ class ProductManagement extends Component {
 
     
     updateProduct(product){
-        console.log("ss"+product.name);
+        this.setState({
+            productId:product.productId,
+            productName:product.productName,
+            productPrice:product.productPrice,
+            productDiscount:product.productDiscount,
+            productImageRef:product.productImageRef,
+            productDescription:product.productDescription,
+            productRating:product.productRating,
+            productCategory:product.productCategory
+        },() => {
+            console.log(this.state.productName)
+        })
     }
 
     removeProductById(productId){
