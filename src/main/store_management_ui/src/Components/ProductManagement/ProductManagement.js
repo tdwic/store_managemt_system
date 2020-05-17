@@ -69,7 +69,7 @@ class ProductManagement extends Component {
         });
     }
 
-    addNewProduct = (event) => {
+    productCommonFormController = (event) => {
 
         if(this.state.productId === ''){
             console.log("No ID = ADD Working");
@@ -119,27 +119,6 @@ class ProductManagement extends Component {
 
 
         }
-
-
-
-        // let formData={
-        //         "productName":this.state.productName,
-        //         "productPrice":this.state.productPrice,
-        //         "productDiscount":this.state.productDiscount,
-        //         "productImageRef":"this.state.pro",
-        //         "productDescription":this.state.productDescription,
-        //         "productRating":this.state.productRating,
-        //         "productCategory":this.state.productCategory
-        // }
-
-        // CommonPost('product',formData)
-        //     .then(res=>res.json())
-        //     .then(json =>{
-        //         this.setState({
-        //             isLoaded : true
-        //         })
-        //         this.componentDidMount();
-        // });
 
     }
 
@@ -194,7 +173,7 @@ class ProductManagement extends Component {
         return (
             <div className="mainDiv">
                 <div>
-                    <Form className="mainForm" onSubmit={this.addNewProduct}>
+                    <Form className="mainForm" onSubmit={this.productCommonFormController}>
 
                         <Form.Row>
                             <Form.Group as={Col}>
