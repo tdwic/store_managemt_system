@@ -205,7 +205,6 @@ class ProductManagement extends Component {
 
                             <Form.Group as={Col} >
                                 <Form.Label>Product Category</Form.Label>
-                                {/* <Form.Control name='productCategory' value={this.state.productCategory} onChange={this.handleChange} type="text" placeholder="Enter Product Category" /> */}
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         <option key={category.categoryId} value={category.categoryId}>
@@ -213,12 +212,12 @@ class ProductManagement extends Component {
                                         </option>
                                     ))}
                                 </Form.Control>
-                               
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                 
                                 <Form.Label>Product Image</Form.Label>
+                                <Form.Control as="file"></Form.Control>
                                 {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
                             
                             </Form.Group>
