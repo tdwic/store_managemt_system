@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import './ProductManagement.css'
-import { CommonGet, CommonDeleteById, CommonPost } from '../../config';
+import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
 
 
 class ProductManagement extends Component {
@@ -14,14 +14,18 @@ class ProductManagement extends Component {
             productName:'',
             productId:'',
             productCategory:'',
-            prodDescription:'',
+            productDescription:'',
             productDiscount:'',
             productPrice:'',
             productRating:'',
 
             categoryList: [],
             productList: [] ,
-            isLoaded : false
+            isLoaded : false,
+
+            editEnable:false,
+            saved:false,
+
           };
     }
 
@@ -31,7 +35,7 @@ class ProductManagement extends Component {
             productName:'',
             productId:'',
             productCategory:'',
-            prodDescription:'',
+            productDescription:'',
             productDiscount:'',
             productPrice:'',
             productRating:'',
@@ -67,25 +71,75 @@ class ProductManagement extends Component {
 
     addNewProduct = (event) => {
 
-        let formData={
+        if(this.state.productId === ''){
+            console.log("No ID = ADD Working");
+
+            let formData={
+                    "productName":this.state.productName,
+                    "productPrice":this.state.productPrice,
+                    "productDiscount":this.state.productDiscount,
+                    "productImageRef":"this.state.pro",
+                    "productDescription":this.state.productDescription,
+                    "productRating":this.state.productRating,
+                    "productCategory":this.state.productCategory
+            }
+
+            CommonPost('product',formData)
+                .then(res=>res.json())
+                .then(json =>{
+                    this.setState({
+                        isLoaded : true
+                    })
+                    this.componentDidMount();
+            });
+
+        }else{
+            console.log("false");
+
+            let productDataToUpdate={
+                "productId":this.state.productId,
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
                 "productImageRef":"this.state.pro",
-                "productDescription":this.state.prodDescription,
+                "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
-                "productCategory":this.state.productCategory
+                "productCategory":3
+                // "productCategory":this.state.productCategory
+            }
+
+            CommonPost('product',productDataToUpdate)
+                .then(res=>res.json())
+                .then(json =>{
+                    this.setState({
+                        isLoaded : true
+                    })
+                    this.componentDidMount();
+            });
+
+
         }
 
-        CommonPost('product',formData)
-            .then(res=>res.json())
-            .then(json =>{
-                this.setState({
-                    isLoaded : true
-                })
-                this.componentDidMount();
-        });
 
+
+        // let formData={
+        //         "productName":this.state.productName,
+        //         "productPrice":this.state.productPrice,
+        //         "productDiscount":this.state.productDiscount,
+        //         "productImageRef":"this.state.pro",
+        //         "productDescription":this.state.productDescription,
+        //         "productRating":this.state.productRating,
+        //         "productCategory":this.state.productCategory
+        // }
+
+        // CommonPost('product',formData)
+        //     .then(res=>res.json())
+        //     .then(json =>{
+        //         this.setState({
+        //             isLoaded : true
+        //         })
+        //         this.componentDidMount();
+        // });
 
     }
 
@@ -109,7 +163,7 @@ class ProductManagement extends Component {
     };
 
     
-    updateProduct(product){
+    renderDataToForm(product){
         this.setState({
             productId:product.productId,
             productName:product.productName,
@@ -120,7 +174,10 @@ class ProductManagement extends Component {
             productRating:product.productRating,
             productCategory:product.productCategory
         },() => {
-            console.log(this.state.productName)
+            console.log(this.state.productName);
+            this.setState({
+                editEnable:true
+            })
         })
     }
 
@@ -193,14 +250,25 @@ class ProductManagement extends Component {
 
                             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Product Description</Form.Label>
-                                <Form.Control name='prodDescription' value={this.state.prodDescription} onChange={this.handleChange} className="prodDescription" as="textarea" rows="10" />
+                                <Form.Control name='productDescription' value={this.state.productDescription} onChange={this.handleChange} className="productDescription" as="textarea" rows="10" />
                             </Form.Group>
 
                         </Form.Row>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
-                                    <Button type="submit" variant="success">Add Product</Button>
+                                    {
+                                        this.state.editEnable?
+                                        <div>
+                                            <Button type="submit" variant="warning">Save Changes</Button>
+                                        </div>
+                                        :
+                                        <div>
+                                            <Button type="submit" variant="success">Add Product</Button>
+                                        </div>
+                                    }
+                                    
+                                    
                                 </Form.Group>
                                 
                             </Form.Row>
@@ -237,7 +305,7 @@ class ProductManagement extends Component {
                                             <td>{element.productDescription}</td>
                                             <td>{element.productRating}</td>
                                             <td>{element.productCategory}</td>
-                                            <td><Button variant="warning" onClick={(event) => this.updateProduct(element)}>Update</Button></td>
+                                            <td><Button variant="warning" onClick={(event) => this.renderDataToForm(element)}>Update</Button></td>
                                             <td><Button variant="danger" onClick={(event) => this.removeProductById(element.productId)}>Delete</Button></td>
                                         </tr>
                                     )
