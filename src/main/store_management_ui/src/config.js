@@ -56,4 +56,15 @@ export const CommonDeleteAll = (controller, requestbody) => {
 
 }
 
+export const CommonUpdateById =  (controller,queryString, requestbody)=> {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestbody)
+    };
+
+    return fetch(api+'/'+controller+'/'+queryString,requestOptions);
+
+}
+
 
