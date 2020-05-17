@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,6 +21,27 @@ public class UserService {
 
     public ArrayList<User> listAllUsers(){
         return (ArrayList<User>) userRepository.findAll();
+    }
+
+    public Optional<User> findUserDetails(String id){
+        return (Optional<User>) userRepository.findById(id);
+    }
+
+    public User updateUserDetails(User user, User u){
+        if(user.getFirstname() != null){
+            u.setFirstname(user.getFirstname());
+        }
+        if(user.getLastname() != null){
+            u.setLastname(user.getLastname());
+        }
+        if(user.getEmail() != null){
+            u.setEmail(user.getEmail());
+        }
+        if(user.getPassword() != null){
+            u.setPassword(user.getPassword());
+        }
+
+        return userRepository.save(u);
     }
 
     public void deleteUser(String id){
