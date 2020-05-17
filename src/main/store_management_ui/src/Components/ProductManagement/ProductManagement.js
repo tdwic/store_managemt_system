@@ -209,7 +209,7 @@ class ProductManagement extends Component {
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         <option key={category.categoryId} value={category.categoryId}>
-                                            {category.categoryName}{category.categoryId}
+                                            {category.categoryName}
                                         </option>
                                     ))}
                                 </Form.Control>
