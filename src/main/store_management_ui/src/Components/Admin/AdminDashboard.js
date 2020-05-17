@@ -27,7 +27,7 @@ export default class AdminDashboard extends Component {
 
 
     listAllCategories = () =>{
-        CommonGet('listCategoryDet','')
+        CommonGet('category','')
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
