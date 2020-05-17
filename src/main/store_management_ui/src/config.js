@@ -20,6 +20,17 @@ var api = 'http://localhost:8181';
        
     }
 
+    export const CommonUpdate =  (controller,requestbody)=> {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestbody)
+        };
+
+        return fetch(api+'/'+controller,requestOptions);
+       
+    }
+
 export const CommonDeleteById = (controller, queryString) => {
 
     const requestOptions = {
