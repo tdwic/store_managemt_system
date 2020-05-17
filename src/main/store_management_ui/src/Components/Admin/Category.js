@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
+import EditCategory from "./EditCategory";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 
 export default class Category extends Component {
@@ -11,26 +12,18 @@ export default class Category extends Component {
         this.state = {
             categoryName: '',
             categories: [] ,
-            isLoaded : false
+            updateCategories : [],
+            isLoaded : false,
+            displayModel : false
         }
     }
 
     componentDidMount() {
-        // CommonGet('listCategoryDet','')
-        //     .then(res=>res.json())
-        //     .then(json =>{
-        //         this.setState({
-        //             isLoaded:true,
-        //             categories: json
-        //         })
-        //         console.log(this.state.categories);
-        //     });
         this.listCategoryItem();
-
     }
 
     listCategoryItem(){
-        CommonGet('listCategoryDet','')
+        CommonGet('category','')
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
@@ -41,10 +34,11 @@ export default class Category extends Component {
             });
     }
 
+
     handleSubmit = (event) => {
         const { categoryName} = this.state;
 
-        CommonPost('addCategory',{categoryName})
+        CommonPost('category',{categoryName})
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
@@ -52,8 +46,6 @@ export default class Category extends Component {
 
                 })
             });
-
-
     }
 
     handleOnChange = (event) => {
@@ -61,8 +53,6 @@ export default class Category extends Component {
             categoryName : event.target.value
         })
     }
-
-
 
     handleOnDelete =(id,event) =>{
         CommonDeleteById('category', id)
@@ -74,8 +64,14 @@ export default class Category extends Component {
                 this.componentDidMount();
             })
     }
+    idVal ;
     render() {
+        const {catid, catname} = this.state;
+        let closeModel = () => this.setState({
+            displayModel:false
+        });
         return(
+
             <div>
                 <h3>Category Details</h3>
                 <div>
@@ -86,7 +82,7 @@ export default class Category extends Component {
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
                             <Form onSubmit={this.handleSubmit}>
-                                <Form.Group controlId="StoreManagerNameTxt">
+                                <Form.Group controlId="categoryNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Category :</Form.Label>
                                     <Form.Control type="text" placeholder="Enter Category" name = "categoryName" onChange = {this.handleOnChange} value = {this.state.categoryName} required />
                                 </Form.Group>
@@ -113,9 +109,15 @@ export default class Category extends Component {
                         <tbody>
                         {this.state.categories.map((element, index) =>
                             <tr key={element.categoryId}>
-                                <td>{index + 1}</td>
+                                <td>{this.idVal = index + 1}</td>
                                 <td>{element.categoryName}</td>
-                                <td><Button variant="warning">Update</Button></td>
+                                <td><Button onClick={() => this.setState({displayModel : true, catid:element.categoryId, catname : element.categoryName})} variant="warning">Update</Button>
+                                <EditCategory
+                                show = {this.state.displayModel}
+                                onHide ={closeModel}
+                                catid = {catid}
+                                catname = {catname}/>
+                                </td>
                                 <td><Button onClick={(event) => this.handleOnDelete(element.categoryId,event)} variant="danger">Delete</Button></td>
                             </tr>
                         )}

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @RestController
@@ -29,7 +30,19 @@ public class UserController {
     @RequestMapping(value = "/user/{id}",method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable String id){
         userService.deleteUser(id);
+    }
 
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public Optional<User> findUserById(@PathVariable String id)
+    {
+        return userService.findUserDetails(id);
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+    public User updateUser(@PathVariable String id ,@RequestBody User user){
+        Optional<User> optUser = userService.findUserDetails(id);
+        User u = optUser.get();
+        return userService.updateUserDetails(user, u);
     }
 
 }

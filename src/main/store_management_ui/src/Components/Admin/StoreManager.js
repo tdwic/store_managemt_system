@@ -3,6 +3,7 @@ import {Table, Toast} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
+import EditStoreManager from "./EditStoreManager";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 
 export default class StoreManager extends Component {
@@ -13,9 +14,12 @@ export default class StoreManager extends Component {
             lastname : '',
             email : '',
             role: 2 ,
+
             storeManagers : [],
             users:[],
-            isLoaded : false
+
+            isLoaded : false,
+            displayModel : false
         }
 
         // THis is the previous state type which is used in here.
@@ -107,6 +111,10 @@ export default class StoreManager extends Component {
     }
 
     render(){
+        const {usid, usfname, uslname, usemail} = this.state;
+        let closeModel = () => this.setState({
+            displayModel:false
+        });
         return(
             <div>
                 <h3>Store Manager Details</h3>
@@ -128,7 +136,7 @@ export default class StoreManager extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label style={{float:'left', fontSize:'20px',fontFamily:'Square Sans Serif'}}>Email address :</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" name = "email" onChange={this.handleOnChange} value = {this.state.email} />
+                                    <Form.Control type="email" placeholder="Enter email" name = "email" onChange={this.handleOnChange} value = {this.state.email} required/>
                                 </Form.Group>
                                 <Button  variant="success" type="submit">
                                     Add Store Manager
@@ -161,7 +169,15 @@ export default class StoreManager extends Component {
                                 <td>{element.lastname}</td>
                                 <td>{element.email}</td>
                                 <td>{element.password}</td>
-                                <td><Button variant="warning">Update</Button></td>
+                                <td><Button onClick={() => this.setState({displayModel:true, usid:element.id, usfname:element.firstname, uslname:element.lastname, usemail:element.email})} variant="warning">Update</Button>
+                                <EditStoreManager
+                                    show = {this.state.displayModel}
+                                    onHide = {closeModel}
+                                    usid = {usid}
+                                    usfname = {usfname}
+                                    uslname = {uslname}
+                                    usemail = {usemail}/>
+                                </td>
                                 <td><Button onClick = {(event) =>this.handleOnDelete(element.id,event)} variant="danger">Delete</Button></td>
                             </tr>
                         )}
