@@ -47,7 +47,7 @@ class App extends Component{
     }
     componentDidMount(){
 
-        CommonGet('listCategoryDet','')
+        CommonGet('category','')
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
@@ -62,7 +62,7 @@ class App extends Component{
 
        const x = id.toString();
 
-       window.sessionStorage.setItem("YOLO:",x);
+       window.sessionStorage.setItem("CatId:",x);
 
         // this.setState({
         //     id: id

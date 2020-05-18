@@ -16,6 +16,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Badge from "react-bootstrap/Badge";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import "react-toastify/dist/ReactToastify.css"
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -67,7 +69,7 @@ class Home extends Component {
                 })
             });
 
-        toast("Successfully Added to Your Cart!");
+        toast.success("Successfully Added to Your Cart!");
 
     };
 
@@ -93,7 +95,7 @@ class Home extends Component {
                 })
             });
 
-        toast("Added to WishList!");
+        toast.error("Added to WishList!");
 
     };
  renderproducts(productset) {
@@ -216,6 +218,7 @@ class Home extends Component {
                  autoClose={5000}
                  hideProgressBar={false}
                  newestOnTop={false}
+                 backgroundColor="red"
                  closeOnClick
                  rtl={false}
                  pauseOnFocusLoss

@@ -8,6 +8,7 @@ import empimg from "../../Images/noimg.jpg";
 import CardGroup from "react-bootstrap/CardGroup";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 class WishList extends Component {
   constructor(props){
@@ -117,7 +118,7 @@ class WishList extends Component {
                 })
             });
 
-        toast("Successfully Added to Your Cart!");
+        toast.success("Successfully Added to Your Cart!");
 
     };
 
@@ -130,17 +131,13 @@ class WishList extends Component {
                 this.setState({
                     isLoaded:true,
                 })
-            }).then=() => {
-            CommonGet('getAllWishList','')
-                .then(res=>res.json())
-                .then(json =>{
-                    this.setState({
-                        isLoaded:true,
-                        wishList: json
-                    })
-                    this.render();
-                });
+            }).then=()=>{
+            toast.error("Successfully Deleted from Your WishList");
+
         }
+        this.componentDidMount();
+
+
 
 
 

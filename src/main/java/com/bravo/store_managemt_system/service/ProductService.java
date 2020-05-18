@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -28,5 +29,9 @@ public class ProductService {
 
     public ArrayList<Product> getProduct(){
         return (ArrayList<Product>) productRepository.findAll();
+    }
+
+    public List<Product> getProductListByCategoryId(String CategoryId){
+        return productRepository.findByProductCategory(CategoryId);
     }
 }

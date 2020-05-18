@@ -45,5 +45,11 @@ public class ProductController {
 
    }
 
+   @RequestMapping(value = "/productByCategoryId/{id}", method = RequestMethod.GET)
+   public ArrayList<Product> showData(@PathVariable String id){
+
+      return (ArrayList<Product>) productService.getProductListByCategoryId(id);
+
+   }
 
 }
