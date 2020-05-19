@@ -42,8 +42,6 @@ export default class StoreManager extends Component {
 
     }
 
-
-
     generateStoreManagerPassword(genEm){
         let randomNumber = Math.floor(Math.random() * 101);
         let firstPart = genEm.substring(0,4);
