@@ -5,6 +5,7 @@ import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import EditCategory from "./EditCategory";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default class Category extends Component {
     constructor(props) {
@@ -19,6 +20,9 @@ export default class Category extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            categoryName:''
+        });
         this.listCategoryItem();
     }
 
@@ -35,8 +39,19 @@ export default class Category extends Component {
     }
 
 
-    handleSubmit = (event) => {
+    handleOnClick = (event) => {
+        event.preventDefault();
         const { categoryName} = this.state;
+
+        if(categoryName === ""){
+            return toast.error("Category Name cannot be Empty");
+        }
+
+        for(let i = 0 ; i < this.state.categories.length ; i++  ){
+            if(this.state.categories[i].categoryName.toLowerCase() === categoryName.toString().toLocaleLowerCase()){
+                return toast.error("Category Name already Exists");
+            }
+        }
 
         CommonPost('category',{categoryName})
             .then(res=>res.json())
@@ -45,7 +60,10 @@ export default class Category extends Component {
                     isLoaded : true
 
                 })
+                this.componentDidMount();
             });
+
+        return toast.success("New Category has been added");
     }
 
     handleOnChange = (event) => {
@@ -61,6 +79,7 @@ export default class Category extends Component {
                 this.setState({
                     isLoaded: true,
                 })
+                toast.success("Category has been Deleted");
                 this.componentDidMount();
             })
     }
@@ -81,12 +100,12 @@ export default class Category extends Component {
                     <div className='row'>
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
-                            <Form onSubmit={this.handleSubmit}>
+                            <Form>
                                 <Form.Group controlId="categoryNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>Category :</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Category" name = "categoryName" onChange = {this.handleOnChange} value = {this.state.categoryName} required />
+                                    <Form.Control type="text" placeholder="Enter Category" name = "categoryName" onChange = {this.handleOnChange} value = {this.state.categoryName} required/>
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button  onClick={this.handleOnClick} variant="success" type="submit" >
                                     Add Category
                                 </Button>
                             </Form>
@@ -125,6 +144,19 @@ export default class Category extends Component {
                         </tbody>
                     </Table>
                 </div>
+                <ToastContainer
+                    className="mainToast"
+                    position="bottom-right"
+                    autoClose={3000}
+                    backgroundColor="red"
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         );
     }
