@@ -104,8 +104,8 @@ class ProductManagement extends Component {
                     this.setState({
                         isLoaded : true
                     })
-                    toast.success("Product Added Sucessfully!");
                     this.componentDidMount();
+                    toast.success("Product Added Sucessfully!");
                 });
             }else{
                 toast.error("Please Fill All the Fields Before Add Product!");
@@ -124,7 +124,7 @@ class ProductManagement extends Component {
                 "productImageRef":this.state.files.base64,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
-                "productCategory":3
+                "productCategory":this.state.productCategory
                 // "productCategory":this.state.productCategory
             }
 
@@ -136,7 +136,7 @@ class ProductManagement extends Component {
                 productDataToUpdate.productRating !== '' && 
                 productDataToUpdate.productCategory !== ''){
                 console.log("product updating");
-                toast("Successfully Added to Your Cart!");
+                
                     CommonPost('product',productDataToUpdate)
                         .then(res=>res.json())
                         .then(json =>{
@@ -144,6 +144,7 @@ class ProductManagement extends Component {
                                 isLoaded : true
                             })
                             this.componentDidMount();
+                            toast.success("Product Sucessfully Updated!");
                         });
             }else{
                 toast.error("Please Fill All the Fields Before Updating the Product!");
@@ -196,8 +197,10 @@ class ProductManagement extends Component {
         CommonDeleteById('product',productId)
         .then(res => {
             console.log("product Removed");
+            this.componentDidMount();
+            toast.success("Product Removed Sucessfully!");
         })
-        this.componentDidMount();
+        
     }
 
 
