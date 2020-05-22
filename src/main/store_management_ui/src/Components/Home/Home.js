@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Badge from "react-bootstrap/Badge";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import "react-toastify/dist/ReactToastify.css"
+import './Home.css'
 
 class Home extends Component {
     constructor(props) {
@@ -104,8 +105,8 @@ class Home extends Component {
             productset.map((product) => {
                 return (
                     <Col xs="4">
-                    <Card>
-                        <Card.Img variant="top" src={empimg} rounded />
+                    <Card id="productCard" key={product.productId}>
+                        <Card.Img id="productCardImage" variant="top" src={product.productImageRef} rounded />
                         <Card.Body>
                             <Card.Title>{product.productName}</Card.Title>
                             <Card.Text>
