@@ -33,11 +33,6 @@ class ProductManagement extends Component {
 
     componentDidMount(){
 
-        toast.error("ss");
-            toast.success("sssgg");
-            toast.warn("dfdssf");
-            toast.info("ssd");
-
         this.setState({
             productName:'',
             productId:'',
@@ -236,6 +231,7 @@ class ProductManagement extends Component {
                                 <Form.Label>Product Category</Form.Label>
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
+                                        // <option key={category.categoryId}>Select a category</option>
                                         <option key={category.categoryId} value={category.categoryId}>
                                             {category.categoryName}
                                         </option>
