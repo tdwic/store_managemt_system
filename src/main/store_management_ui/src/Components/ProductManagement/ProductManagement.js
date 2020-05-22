@@ -8,6 +8,9 @@ import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../con
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
 
+import FileBase64 from 'react-file-base64';
+
+
 
 class ProductManagement extends Component {
     constructor(props) {
@@ -21,6 +24,7 @@ class ProductManagement extends Component {
             productPrice:'',
             productRating:'',
 
+            files: [],
             categoryList: [],
             productList: [] ,
             isLoaded : false,
@@ -46,6 +50,11 @@ class ProductManagement extends Component {
         this.fetchProductList();
         this.fetchCategoryList();
     }
+
+    getFiles(files){
+        this.setState({ files: files })
+        console.log(files.base64);
+      }
 
     fetchProductList(){
         CommonGet('product','')
@@ -79,7 +88,7 @@ class ProductManagement extends Component {
                     "productName":this.state.productName,
                     "productPrice":this.state.productPrice,
                     "productDiscount":this.state.productDiscount,
-                    "productImageRef":"this.state.pro",
+                    "productImageRef":this.state.files.base64,
                     "productDescription":this.state.productDescription,
                     "productRating":this.state.productRating,
                     "productCategory":this.state.productCategory
@@ -112,7 +121,7 @@ class ProductManagement extends Component {
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
-                "productImageRef":"this.state.pro",
+                "productImageRef":this.state.files.base64,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
                 "productCategory":3
@@ -197,6 +206,9 @@ class ProductManagement extends Component {
             <div className="mainDiv">
                 <div>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
+                    <FileBase64
+            multiple={ false }
+            onDone={ this.getFiles.bind(this) } />
                     <Form className="mainForm">   
 
                         <Form.Row>
@@ -244,7 +256,7 @@ class ProductManagement extends Component {
                                 <Form.Label>Product Image</Form.Label>
                                 <Form.Control as="file"></Form.Control>
                                 {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
-                            
+                                
                             </Form.Group>
 
                         </Form.Row>
