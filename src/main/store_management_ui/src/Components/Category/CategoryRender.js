@@ -9,6 +9,7 @@ import Carousel from "react-bootstrap/Carousel";
 import img1 from "../../Images/img01.jpg";
 import img2 from "../../Images/img02.jpg";
 import img5 from "../../Images/img00.jpg";
+import Navbar from "react-bootstrap/Navbar";
 
 class CategoryRender extends Component {
     constructor(props)
@@ -25,8 +26,17 @@ class CategoryRender extends Component {
 
     componentDidMount(){
        let id=  sessionStorage.getItem("CatId:");
-       console.log("id",id);
+
         CommonGet('productByCategoryId',id)
+            .then(res=>res.json())
+            .then(json =>{
+                this.setState({
+                    isLoaded:true,
+                    productSet: json
+                })
+            });
+
+        CommonGet('category',id)
             .then(res=>res.json())
             .then(json =>{
                 this.setState({
@@ -164,43 +174,18 @@ class CategoryRender extends Component {
         return (
 
             <div>
-                <Carousel>
-                    <Carousel.Item>
+                <Navbar bg="dark" variant="dark">
+                    <Navbar.Brand href="#home">
                         <img
-                            className="d-block w-100 "
-                            src={img1}
-                            alt="First slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>E-Shopping Center</h3>
-                            <p class="text-dark">Shopping From Home, Without Wasting Your Time !</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100 "
-                            src={img2}
-                            alt="Third slide"
-                        />
-
-                        <Carousel.Caption>
-                            <h3>Fast Delivery Every Where!</h3>
-                            <p class="text-dark">24x7 Island Wide Delivery Service! </p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src={img5}
-                            alt="Third slide"
-                        />
-
-                        <Carousel.Caption>
-                            <h3>Quality Products</h3>
-                            <p class="text-dark">World Famouse Top Rated Brands!</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
+                            alt=""
+                            src="/logo.svg"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        React Bootstrap
+                    </Navbar.Brand>
+                </Navbar>
                 <br/>
                 {products}
                 <ToastContainer

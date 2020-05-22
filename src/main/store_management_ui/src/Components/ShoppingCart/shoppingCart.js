@@ -8,6 +8,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardGroup from "react-bootstrap/CardGroup";
 import * as list from "react-bootstrap/cjs/ElementChildren";
+import checkout from "./Checkout";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 class shoppingCart extends Component {
     constructor(props){
@@ -37,7 +39,7 @@ class shoppingCart extends Component {
 
             totalprice = totalprice +item.productPrice;
         });
-        return totalprice;
+        return parseFloat(totalprice).toFixed(2);
 
     }
 
@@ -65,7 +67,7 @@ class shoppingCart extends Component {
                             {item.productName}
                         </Col>
                         <Col xs="4">
-                            {item.productPrice}
+                            { parseFloat(item.productPrice).toFixed(2)}
                         </Col>
                         <Col xs="1">
                             <a href="#" className="ml-auto btn btn-danger btn-sm"  onClick={(event) => this.clearCartById(item.cartId,event)}>
@@ -143,7 +145,7 @@ class shoppingCart extends Component {
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="success" onClick={this.props.onHide}>Place Order</Button>
+                    <Button variant="success" onClick={this.props.onHide}><Link to='/checkout' class="text-light">Place Order</Link></Button>
                     <Button variant="danger" onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>

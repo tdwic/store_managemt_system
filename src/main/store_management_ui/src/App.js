@@ -27,6 +27,7 @@ import AdminDashboard from "./Components/Admin/AdminDashboard";
 import Category from "./Components/Admin/Category";
 import StoreManager from "./Components/Admin/StoreManager";
 import ProductManagement from './Components/ProductManagement/ProductManagement';
+import checkout from  "./Components/ShoppingCart/Checkout"
 import {CommonGet, CommonPost} from "./config";
 
 import CardGroup from "react-bootstrap/CardGroup";
@@ -213,6 +214,7 @@ class App extends Component{
                     <Route exact path='/ProductManagement' component={ProductManagement}/>
                     {/*Category show method*/}
                     <Route exact path="/categoryshow" component={CategoryShow} />
+                    <Route exact path="/checkout" component={checkout} />
                 </Switch>
 
         </div>
