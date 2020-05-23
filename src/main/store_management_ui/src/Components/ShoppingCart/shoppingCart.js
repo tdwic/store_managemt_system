@@ -35,6 +35,7 @@ class shoppingCart extends Component {
 
     calcTotal() {
         var totalprice = 0;
+    
         this.state.ShoppingcartList.map((item) => {
 
             totalprice = totalprice +item.productPrice;
