@@ -23,18 +23,6 @@ export default class StoreManager extends Component {
             displayModel : false
         }
 
-        // THis is the previous state type which is used in here.
-        // But it did not allow setState the generatedPassword.
-        // this.state = {
-        //     firstname : '',
-        //     lastname : '',
-        //     email : '',
-        //     password : '',
-        //     role: 2 ,
-        //     storeManagers : [],
-        //     users:[],
-        //     isLoaded : false
-        // }
     }
 
     componentDidMount() {
@@ -54,7 +42,6 @@ export default class StoreManager extends Component {
 
     }
 
-    //Check The working with the backend
     listStoreManagers(){
         CommonGet('user','')
             .then(res=>res.json())
@@ -74,11 +61,7 @@ export default class StoreManager extends Component {
 
     handleOnClick = (event) =>{
         event.preventDefault();
-        // let randomNumber = Math.floor(Math.random() * 101);
-        // let firstPart = this.state.email.substring(0,4);
-        // let genPassword = `${firstPart}#pwd#${randomNumber}`;
 
-        //Password is generated Because we haven't use it in states.
         let val = this.generateStoreManagerPassword(this.state.email);
         const {firstname , lastname, email , password = val, role } = this.state;
 
@@ -88,6 +71,8 @@ export default class StoreManager extends Component {
             return toast.error("Last Name cannot be Empty");
         }else if(email === ""){
             return toast.error("Email Field cannot be Empty");
+        }else if(!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+            return toast.error("Invalid Email Type");
         }
 
         for(let i = 0 ; i < this.state.storeManagers.length ; i++  ){
@@ -173,7 +158,6 @@ export default class StoreManager extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Password</th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
@@ -185,7 +169,6 @@ export default class StoreManager extends Component {
                                 <td>{element.firstname}</td>
                                 <td>{element.lastname}</td>
                                 <td>{element.email}</td>
-                                <td>{element.password}</td>
                                 <td><Button onClick={() => this.setState({displayModel:true, usid:element.id, usfname:element.firstname, uslname:element.lastname, usemail:element.email})} variant="warning">Update</Button>
                                 <EditStoreManager
                                     show = {this.state.displayModel}
