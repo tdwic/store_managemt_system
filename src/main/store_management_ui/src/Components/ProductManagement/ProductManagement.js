@@ -168,8 +168,6 @@ class ProductManagement extends Component {
             [event.target.name] : event.target.value
         });
 
-        
-
     }
 
     handleClick = (eve) => {
