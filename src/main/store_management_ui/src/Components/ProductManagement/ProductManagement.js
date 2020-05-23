@@ -7,7 +7,7 @@ import './ProductManagement.css'
 import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
-
+import empimg from '../../Images/noimg.jpg';
 import FileBase64 from 'react-file-base64';
 
 
@@ -24,15 +24,21 @@ class ProductManagement extends Component {
             productPrice:'',
             productRating:'',
 
+            productImage:'',
+
+            selected:'',
             files: [],
             categoryList: [],
             productList: [] ,
+            filteredProductList:[],
             isLoaded : false,
 
             editEnable:false,
             saved:false,
-
           };
+
+          this.myDivToFocus = React.createRef()
+
     }
 
     componentDidMount(){
@@ -45,6 +51,7 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
+            productImage:empimg
         })
 
         this.fetchProductList();
@@ -52,7 +59,10 @@ class ProductManagement extends Component {
     }
 
     getFiles(files){
-        this.setState({ files: files })
+        this.setState({ files: files });
+        this.setState({
+            productImage:this.state.files.base64
+        });
         console.log(files.base64);
       }
 
@@ -121,13 +131,13 @@ class ProductManagement extends Component {
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
-                "productImageRef":this.state.files.base64,
+                "productImageRef":this.state.productImage,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
                 "productCategory":this.state.productCategory
-                // "productCategory":this.state.productCategory
-            }
+            };
 
+            console.log("update===>  " + productDataToUpdate.productImageRef);
             
 
             if( productDataToUpdate.productId !== '' && productDataToUpdate.productName !== '' && productDataToUpdate.productPrice !== '' && productDataToUpdate.productDiscount !== '' && 
@@ -163,8 +173,6 @@ class ProductManagement extends Component {
             [event.target.name] : event.target.value
         });
 
-        
-
     }
 
     handleClick = (eve) => {
@@ -184,13 +192,26 @@ class ProductManagement extends Component {
             productImageRef:product.productImageRef,
             productDescription:product.productDescription,
             productRating:product.productRating,
-            productCategory:product.productCategory
+            productCategory:product.productCategory,
+            productImage:product.productImageRef,
+selected:product.productCategory,
+            files:product.productImageRef
+
         },() => {
-            console.log(this.state.productName);
+            console.log(this.state.productImageRef);
             this.setState({
                 editEnable:true
             })
-        })
+        });
+
+
+        if(this.myDivToFocus.current){
+            this.myDivToFocus.current.scrollIntoView({ 
+               behavior: "smooth", 
+               block: "nearest"
+            })
+        }
+
     }
 
     removeProductById(productId){
@@ -207,69 +228,62 @@ class ProductManagement extends Component {
     render() {
         return (
             <div className="mainDiv">
-                <div>
+                <div ref={this.myDivToFocus}>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
-                    <FileBase64
-            multiple={ false }
-            onDone={ this.getFiles.bind(this) } />
                     <Form className="mainForm">   
 
                         <Form.Row>
+
                             <Form.Group as={Col}>
+
                                 <Form.Label>Product Name</Form.Label>
                                 <Form.Control name='productName' value={this.state.productName} onChange={this.handleChange} type="text" placeholder="Enter Product Name" />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-
-                            <Form.Group as={Col}>
+                
                                 <Form.Label>Product Price</Form.Label>
                                 <Form.Control name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="text" placeholder="Enter Product Price" />
-                            </Form.Group>
 
-                            <Form.Group as={Col} >
                                 <Form.Label>Product Discount</Form.Label>
                                 <Form.Control name='productDiscount' value={this.state.productDiscount} onChange={this.handleChange} type="text" placeholder="Enter Product Discount" />
-                            </Form.Group>
 
-                        </Form.Row>
-
-                        <Form.Row>
-
-                            <Form.Group as={Col}>
                                 <Form.Label>Product Rating</Form.Label>
                                 <Form.Control name='productRating' value={this.state.productRating} onChange={this.handleChange} type="text" placeholder="Enter Product Rating" />
-                            </Form.Group>
-
-                            <Form.Group as={Col} >
+                            
                                 <Form.Label>Product Category</Form.Label>
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         // <option key={category.categoryId}>Select a category</option>
-                                        <option key={category.categoryId} value={category.categoryId}>
+                                        <option selected={this.state.selected === category.categoryId} key={category.categoryId} value={category.categoryId}>
                                             {category.categoryName}
                                         </option>
                                     ))}
                                 </Form.Control>
+
+                                <Form.Label>Product Description</Form.Label>
+                                <Form.Control name='productDescription' value={this.state.productDescription} onChange={this.handleChange} className="productDescription" as="textarea" rows="10" />
+                         
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                 
-                                <Form.Label>Product Image</Form.Label>
-                                <Form.Control as="file"></Form.Control>
-                                {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
-                                
+                                <Form.Label>Product Image</Form.Label><br/>
+                                <div class="productImageContainer">
+                                    <div class="imageContainer">
+                                        <img class="productImage" src={this.state.productImage}></img>
+                                    </div>
+
+                                    <div class="buttonContainer">
+                                        <FileBase64 multiple={ false } onDone={ this.getFiles.bind(this) } />
+                                    </div>
+                                    
+                                </div>
+                                            
                             </Form.Group>
 
                         </Form.Row>
 
                         <Form.Row>
 
-                            <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Product Description</Form.Label>
-                                <Form.Control name='productDescription' value={this.state.productDescription} onChange={this.handleChange} className="productDescription" as="textarea" rows="10" />
-                            </Form.Group>
+                            
 
                         </Form.Row>
 
@@ -286,9 +300,14 @@ class ProductManagement extends Component {
                                         </div>
                                     }
                                     
-                                    
                                 </Form.Group>
-                                
+
+                                <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
+                                    <div>
+                                        <Button variant="info" onClick={this.componentDidMount}>Cancel</Button>
+                                    </div>
+                                </Form.Group>
+                                                            
                             </Form.Row>
 
                         </Form>
@@ -307,7 +326,7 @@ class ProductManagement extends Component {
                  pauseOnHover
                 />
                 <hr/>
-                <br/>
+           
 
                 <div>
                     <Table striped bordered hover>
@@ -334,7 +353,15 @@ class ProductManagement extends Component {
                                             <td>{element.productDiscount}%</td>
                                             <td>{element.productDescription}</td>
                                             <td>{element.productRating}</td>
-                                            <td>{element.productCategory}</td>
+                                            <td>
+                                                {
+                                                    this.state.categoryList.map((cat,index)=>{
+                                                        if(element.productCategory === cat.categoryId){
+                                                            return cat.categoryName;
+                                                        }
+                                                    })
+                                                }
+                                            </td>
                                             <td><Button variant="warning" onClick={(event) => this.renderDataToForm(element)}>Update</Button></td>
                                             <td><Button variant="danger" onClick={(event) => this.removeProductById(element.productId)}>Delete</Button></td>
                                         </tr>
