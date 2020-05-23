@@ -42,7 +42,6 @@ public class CategoryService {
         return categoryRepository.save(c);
     }
 
-    //Tharinds way
     public Category updateCategory(Category category){
         return categoryRepository.save(category);
     }

@@ -22,7 +22,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ShoppingCart from "./Components/ShoppingCart/shoppingCart";
-import Admin from "./Components/Admin/Admin";
+
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import Category from "./Components/Admin/Category";
 import StoreManager from "./Components/Admin/StoreManager";
