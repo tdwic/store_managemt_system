@@ -1,17 +1,23 @@
 package com.bravo.store_managemt_system.service;
 
 import com.bravo.store_managemt_system.model.User;
-import com.bravo.store_managemt_system.repository.CategoryRepository;
 import com.bravo.store_managemt_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
     @Autowired
     private UserRepository userRepository;
@@ -56,6 +62,16 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public UserDetailsService loadUserByUsername(String email)  throws UsernameNotFoundException{
+        User user = userRepository.findByEmail(email);
+
+        if(user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return new User(user.getId(),user.getEmail(), user.getPassword(), user.getFirstname(), user.getLastname(), user.getRole());
+    }
+
     public void sendMail(User user){
         try {
             emailService.sendEmail(user);
@@ -63,4 +79,7 @@ public class UserService {
             System.out.println(mailException);
         }
     }
+
+
+
 }

@@ -13,8 +13,16 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
-    private boolean status;
     private int role;
+
+    public User(String id, String email, String password, String firstname, String lastname, int role) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.role = role;
+    }
 
 
     public String getId() {
@@ -55,14 +63,6 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public int getRole() {

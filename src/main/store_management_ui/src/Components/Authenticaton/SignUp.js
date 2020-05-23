@@ -2,7 +2,31 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-class SignUp extends Component {
+export default class SignUp extends Component {
+   constructor(props) {
+        super(props);
+        this.state = {
+            firstname : '',
+            lastname : '',
+            email : '',
+            role: 3,
+            users:[],
+
+            isLoaded : false,
+            displayModel : false
+        }
+      }
+
+          componentDidMount() {
+              this.setState({
+                  firstname : '',
+                  lastname : '',
+                  email : ''
+              });
+              this.listStoreManagers();
+          }
+
+
   render() {
 
     const myStyle = {
@@ -49,5 +73,3 @@ class SignUp extends Component {
     );
   }
 }
-
-export default SignUp;
