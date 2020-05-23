@@ -36,14 +36,7 @@ class CategoryRender extends Component {
                 })
             });
 
-        CommonGet('category',id)
-            .then(res=>res.json())
-            .then(json =>{
-                this.setState({
-                    isLoaded:true,
-                    productSet: json
-                })
-            });
+
 
     }
 
