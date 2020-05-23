@@ -29,6 +29,7 @@ class ProductManagement extends Component {
             files: [],
             categoryList: [],
             productList: [] ,
+            filteredProductList:[],
             isLoaded : false,
 
             editEnable:false,
@@ -126,13 +127,13 @@ class ProductManagement extends Component {
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
-                "productImageRef":this.state.files.base64,
+                "productImageRef":this.state.productImage,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
                 "productCategory":this.state.productCategory
-                // "productCategory":this.state.productCategory
-            }
+            };
 
+            console.log("update===>  " + productDataToUpdate.productImageRef);
             
 
             if( productDataToUpdate.productId !== '' && productDataToUpdate.productName !== '' && productDataToUpdate.productPrice !== '' && productDataToUpdate.productDiscount !== '' && 
@@ -188,11 +189,12 @@ class ProductManagement extends Component {
             productDescription:product.productDescription,
             productRating:product.productRating,
             productCategory:product.productCategory,
-            productImage:product.productImageRef
+            productImage:product.productImageRef,
 
+            files:product.productImageRef
 
         },() => {
-            console.log(this.state.productName);
+            console.log(this.state.productImageRef);
             this.setState({
                 editEnable:true
             })
@@ -311,7 +313,7 @@ class ProductManagement extends Component {
                  pauseOnHover
                 />
                 <hr/>
-                <br/>
+           
 
                 <div>
                     <Table striped bordered hover>
@@ -338,7 +340,16 @@ class ProductManagement extends Component {
                                             <td>{element.productDiscount}%</td>
                                             <td>{element.productDescription}</td>
                                             <td>{element.productRating}</td>
-                                            <td>{element.productCategory}</td>
+                                            <td>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                {
+                                                    this.state.categoryList.map((cat,index)=>{
+                                                        if(element.productCategory === cat.categoryId){
+                                                            return cat.categoryName;
+                                                        }
+                                                    })
+                                                }
+                                            </td>
                                             <td><Button variant="warning" onClick={(event) => this.renderDataToForm(element)}>Update</Button></td>
                                             <td><Button variant="danger" onClick={(event) => this.removeProductById(element.productId)}>Delete</Button></td>
                                         </tr>
