@@ -16,8 +16,8 @@
     border: 1px red solid;
 
     border-radius: 5px;
-    max-width: 700px;
-    min-width: 700px;
+    max-width: 600px;
+    min-width: 600px;
 
     max-height: 420px;
     min-height: 420px;
@@ -25,8 +25,8 @@
 }
 
 .imageContainer{
-    max-width: 700px;
-    min-width: 700px;
+    max-width: 600px;
+    min-width: 600px;
 
     max-height: 370px;
     min-height: 370px;
