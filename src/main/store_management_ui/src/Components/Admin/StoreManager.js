@@ -5,6 +5,7 @@ import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import EditStoreManager from "./EditStoreManager";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
+import {toast, ToastContainer} from "react-toastify";
 
 export default class StoreManager extends Component {
     constructor(props) {
@@ -37,12 +38,13 @@ export default class StoreManager extends Component {
     }
 
     componentDidMount() {
-        //Works. But have to check with the DB
+        this.setState({
+            firstname : '',
+            lastname : '',
+            email : ''
+        });
         this.listStoreManagers();
-
     }
-
-
 
     generateStoreManagerPassword(genEm){
         let randomNumber = Math.floor(Math.random() * 101);
@@ -70,26 +72,41 @@ export default class StoreManager extends Component {
             });
     }
 
-    handleSubmit = (event) =>{
+    handleOnClick = (event) =>{
+        event.preventDefault();
         // let randomNumber = Math.floor(Math.random() * 101);
         // let firstPart = this.state.email.substring(0,4);
         // let genPassword = `${firstPart}#pwd#${randomNumber}`;
 
         //Password is generated Because we haven't use it in states.
         let val = this.generateStoreManagerPassword(this.state.email);
-
-        console.log("Set Password: ", val);
-        console.log("Set Email: ", this.state.email);
-
         const {firstname , lastname, email , password = val, role } = this.state;
+
+        if(firstname === ""){
+            return toast.error("First Name cannot be Empty");
+        }else if(lastname === ""){
+            return toast.error("Last Name cannot be Empty");
+        }else if(email === ""){
+            return toast.error("Email Field cannot be Empty");
+        }
+
+        for(let i = 0 ; i < this.state.storeManagers.length ; i++  ){
+            if(this.state.storeManagers[i].email.toLowerCase() === email.toString().toLocaleLowerCase()){
+                return toast.error("Email already Exists");
+            }
+        }
+
         CommonPost('user' ,{firstname , lastname, email , password, role})
             .then(res => res.json())
             .then(json => {
                 this.setState({
                     isLoaded: true
                 });
-            })
-        ;
+                this.componentDidMount();
+            });
+
+        return toast.success("New Store Manager has been added");
+
     };
 
     handleOnChange = (event) => {
@@ -125,7 +142,7 @@ export default class StoreManager extends Component {
                     <div className='row'>
                         <div className="col-lg-7" style={{  float: 'none',
                             margin: '10px auto'}}>
-                            <Form onSubmit = {this.handleSubmit}>
+                            <Form>
                                 <Form.Group controlId="StoreManagerFNameTxt">
                                     <Form.Label style={{float:'left', fontSize:'20px' ,fontFamily:'Square Sans Serif'}}>First Name :</Form.Label>
                                     <Form.Control type="text" placeholder="Enter Name" name = "firstname" onChange={this.handleOnChange} value={this.state.firstname}  required/>
@@ -138,7 +155,7 @@ export default class StoreManager extends Component {
                                     <Form.Label style={{float:'left', fontSize:'20px',fontFamily:'Square Sans Serif'}}>Email address :</Form.Label>
                                     <Form.Control type="email" placeholder="Enter email" name = "email" onChange={this.handleOnChange} value = {this.state.email} required/>
                                 </Form.Group>
-                                <Button  variant="success" type="submit">
+                                <Button  onClick = {this.handleOnClick} variant="success" type="submit">
                                     Add Store Manager
                                 </Button>
                             </Form>
@@ -185,6 +202,19 @@ export default class StoreManager extends Component {
                         </tbody>
                     </Table>
                 </div>
+                <ToastContainer
+                    className="mainToast"
+                    position="bottom-right"
+                    autoClose={3000}
+                    backgroundColor="red"
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         );
     }

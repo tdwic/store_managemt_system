@@ -2,8 +2,10 @@ package com.bravo.store_managemt_system.controler;
 
 import com.bravo.store_managemt_system.model.User;
 import com.bravo.store_managemt_system.service.CategoryService;
+import com.bravo.store_managemt_system.service.EmailService;
 import com.bravo.store_managemt_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

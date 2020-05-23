@@ -8,6 +8,9 @@ import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../con
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
 
+import FileBase64 from 'react-file-base64';
+
+
 
 class ProductManagement extends Component {
     constructor(props) {
@@ -21,6 +24,7 @@ class ProductManagement extends Component {
             productPrice:'',
             productRating:'',
 
+            files: [],
             categoryList: [],
             productList: [] ,
             isLoaded : false,
@@ -32,11 +36,6 @@ class ProductManagement extends Component {
     }
 
     componentDidMount(){
-
-        toast.error("ss");
-            toast.success("sssgg");
-            toast.warn("dfdssf");
-            toast.info("ssd");
 
         this.setState({
             productName:'',
@@ -51,6 +50,11 @@ class ProductManagement extends Component {
         this.fetchProductList();
         this.fetchCategoryList();
     }
+
+    getFiles(files){
+        this.setState({ files: files })
+        console.log(files.base64);
+      }
 
     fetchProductList(){
         CommonGet('product','')
@@ -84,7 +88,7 @@ class ProductManagement extends Component {
                     "productName":this.state.productName,
                     "productPrice":this.state.productPrice,
                     "productDiscount":this.state.productDiscount,
-                    "productImageRef":"this.state.pro",
+                    "productImageRef":this.state.files.base64,
                     "productDescription":this.state.productDescription,
                     "productRating":this.state.productRating,
                     "productCategory":this.state.productCategory
@@ -100,8 +104,8 @@ class ProductManagement extends Component {
                     this.setState({
                         isLoaded : true
                     })
-                    toast.success("Product Added Sucessfully!");
                     this.componentDidMount();
+                    toast.success("Product Added Sucessfully!");
                 });
             }else{
                 toast.error("Please Fill All the Fields Before Add Product!");
@@ -117,10 +121,10 @@ class ProductManagement extends Component {
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
-                "productImageRef":"this.state.pro",
+                "productImageRef":this.state.files.base64,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
-                "productCategory":3
+                "productCategory":this.state.productCategory
                 // "productCategory":this.state.productCategory
             }
 
@@ -132,7 +136,7 @@ class ProductManagement extends Component {
                 productDataToUpdate.productRating !== '' && 
                 productDataToUpdate.productCategory !== ''){
                 console.log("product updating");
-                toast("Successfully Added to Your Cart!");
+                
                     CommonPost('product',productDataToUpdate)
                         .then(res=>res.json())
                         .then(json =>{
@@ -140,6 +144,7 @@ class ProductManagement extends Component {
                                 isLoaded : true
                             })
                             this.componentDidMount();
+                            toast.success("Product Sucessfully Updated!");
                         });
             }else{
                 toast.error("Please Fill All the Fields Before Updating the Product!");
@@ -192,8 +197,10 @@ class ProductManagement extends Component {
         CommonDeleteById('product',productId)
         .then(res => {
             console.log("product Removed");
+            this.componentDidMount();
+            toast.success("Product Removed Sucessfully!");
         })
-        this.componentDidMount();
+        
     }
 
 
@@ -202,6 +209,9 @@ class ProductManagement extends Component {
             <div className="mainDiv">
                 <div>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
+                    <FileBase64
+            multiple={ false }
+            onDone={ this.getFiles.bind(this) } />
                     <Form className="mainForm">   
 
                         <Form.Row>
@@ -236,6 +246,7 @@ class ProductManagement extends Component {
                                 <Form.Label>Product Category</Form.Label>
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
+                                        // <option key={category.categoryId}>Select a category</option>
                                         <option key={category.categoryId} value={category.categoryId}>
                                             {category.categoryName}
                                         </option>
@@ -248,7 +259,7 @@ class ProductManagement extends Component {
                                 <Form.Label>Product Image</Form.Label>
                                 <Form.Control as="file"></Form.Control>
                                 {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
-                            
+                                
                             </Form.Group>
 
                         </Form.Row>

@@ -4,6 +4,7 @@ import com.bravo.store_managemt_system.model.User;
 import com.bravo.store_managemt_system.repository.CategoryRepository;
 import com.bravo.store_managemt_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,8 +16,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public User addNewUser(User user){
-        return userRepository.save(user);
+        User u = userRepository.save(user);
+        if(user.getRole() == 2){
+            sendMail(user);
+        }
+        return u;
     }
 
     public ArrayList<User> listAllUsers(){
@@ -46,5 +54,13 @@ public class UserService {
 
     public void deleteUser(String id){
         userRepository.deleteById(id);
+    }
+
+    public void sendMail(User user){
+        try {
+            emailService.sendEmail(user);
+        } catch (MailException mailException) {
+            System.out.println(mailException);
+        }
     }
 }

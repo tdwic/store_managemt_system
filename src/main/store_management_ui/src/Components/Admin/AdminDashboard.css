@@ -1,0 +1,65 @@
+.order-card {
+    color: #fff;
+}
+
+.card {
+    border-radius: 15px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border:3px solid white;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.cat-icon{
+    width:50px;
+    height: 50px;
+}
+
+.storeM-icon{
+    width: 50px;
+    height: 50px;
+}
+
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+}
+
+.card .card-block {
+    padding: 10px 40px 40px;
+}
+
+.bg-c-green {
+    /*background: linear-gradient(90deg, rgba(1,128,128,0.2) 4%, rgba(164,212,174,0.2) 100%);*/
+    /*background: linear-gradient(90deg, rgba(120,233,144,1) 25%, rgba(164,212,174,1) 100%);*/
+    /*background: linear-gradient(to right, #457fca, #5691c8);*/
+    /*background: linear-gradient(to right, #2980b9, #2c3e50);*/
+    background: #4186b4;
+    /*background: linear-gradient(90deg, rgba(65,134,180,1) 20%, rgba(41,139,203,1) 80%);*/
+
+}
+.order-card {
+    color: #fff;
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+
+}
+
+.cat-card-s{
+    /*background: linear-gradient(90deg, rgba(0,68,69,1) 25%, rgba(29,105,105,1) 100%);*/
+    background: linear-gradient(to right, #141e30, #243b55);
+    /*background: linear-gradient(to right, #000428, #004e92);*/
+
+}
+
+.storeM-card-s{
+    background: linear-gradient(to right, #ff512f, #f09819);
+    /*background: linear-gradient(90deg, rgba(251,105,53,1) 25%, rgba(223,70,16,1) 80%);*/
+}

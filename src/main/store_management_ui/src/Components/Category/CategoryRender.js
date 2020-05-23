@@ -102,8 +102,7 @@ class CategoryRender extends Component {
                             <Card.Body>
                                 <Card.Title>{product.productName}</Card.Title>
                                 <Card.Text>
-                                    <p> This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+                                <p> {product.productDescription}</p>
 
                                 </Card.Text>
                             </Card.Body>
