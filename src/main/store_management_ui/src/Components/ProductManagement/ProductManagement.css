@@ -4,7 +4,7 @@
 }
 
 .productDescription{
-    min-height: 6rem;
+    min-height: 4rem;
 }
 
 .imageOuter{
@@ -16,20 +16,20 @@
     border: 1px red solid;
 
     border-radius: 5px;
-    max-width: 700px;
-    min-width: 700px;
+    max-width: 600px;
+    min-width: 600px;
 
-    max-height: 455px;
-    min-height: 455px;
+    max-height: 420px;
+    min-height: 420px;
     overflow: hidden;
 }
 
 .imageContainer{
-    max-width: 700px;
-    min-width: 700px;
+    max-width: 600px;
+    min-width: 600px;
 
-    max-height: 400px;
-    min-height: 400px;
+    max-height: 370px;
+    min-height: 370px;
     overflow: scroll;
 }
 
@@ -41,7 +41,7 @@
 
     border: transparent;
     max-height: 1000px;
-    min-height: 370px;
+    min-height: 200px;
 }
 
 .buttonContainer{

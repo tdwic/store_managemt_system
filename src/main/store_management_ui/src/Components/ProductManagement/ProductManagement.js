@@ -26,15 +26,19 @@ class ProductManagement extends Component {
 
             productImage:'',
 
+            selected:'',
             files: [],
             categoryList: [],
             productList: [] ,
+            filteredProductList:[],
             isLoaded : false,
 
             editEnable:false,
             saved:false,
-
           };
+
+          this.myDivToFocus = React.createRef()
+
     }
 
     componentDidMount(){
@@ -47,6 +51,7 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
+            productImage:empimg
         })
 
         this.fetchProductList();
@@ -126,13 +131,13 @@ class ProductManagement extends Component {
                 "productName":this.state.productName,
                 "productPrice":this.state.productPrice,
                 "productDiscount":this.state.productDiscount,
-                "productImageRef":this.state.files.base64,
+                "productImageRef":this.state.productImage,
                 "productDescription":this.state.productDescription,
                 "productRating":this.state.productRating,
                 "productCategory":this.state.productCategory
-                // "productCategory":this.state.productCategory
-            }
+            };
 
+            console.log("update===>  " + productDataToUpdate.productImageRef);
             
 
             if( productDataToUpdate.productId !== '' && productDataToUpdate.productName !== '' && productDataToUpdate.productPrice !== '' && productDataToUpdate.productDiscount !== '' && 
@@ -188,15 +193,25 @@ class ProductManagement extends Component {
             productDescription:product.productDescription,
             productRating:product.productRating,
             productCategory:product.productCategory,
-            productImage:product.productImageRef
-
+            productImage:product.productImageRef,
+selected:product.productCategory,
+            files:product.productImageRef
 
         },() => {
-            console.log(this.state.productName);
+            console.log(this.state.productImageRef);
             this.setState({
                 editEnable:true
             })
-        })
+        });
+
+
+        if(this.myDivToFocus.current){
+            this.myDivToFocus.current.scrollIntoView({ 
+               behavior: "smooth", 
+               block: "nearest"
+            })
+        }
+
     }
 
     removeProductById(productId){
@@ -213,7 +228,7 @@ class ProductManagement extends Component {
     render() {
         return (
             <div className="mainDiv">
-                <div>
+                <div ref={this.myDivToFocus}>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
                     <Form className="mainForm">   
 
@@ -237,7 +252,7 @@ class ProductManagement extends Component {
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         // <option key={category.categoryId}>Select a category</option>
-                                        <option key={category.categoryId} value={category.categoryId}>
+                                        <option selected={this.state.selected === category.categoryId} key={category.categoryId} value={category.categoryId}>
                                             {category.categoryName}
                                         </option>
                                     ))}
@@ -311,7 +326,7 @@ class ProductManagement extends Component {
                  pauseOnHover
                 />
                 <hr/>
-                <br/>
+           
 
                 <div>
                     <Table striped bordered hover>
@@ -338,7 +353,15 @@ class ProductManagement extends Component {
                                             <td>{element.productDiscount}%</td>
                                             <td>{element.productDescription}</td>
                                             <td>{element.productRating}</td>
-                                            <td>{element.productCategory}</td>
+                                            <td>
+                                                {
+                                                    this.state.categoryList.map((cat,index)=>{
+                                                        if(element.productCategory === cat.categoryId){
+                                                            return cat.categoryName;
+                                                        }
+                                                    })
+                                                }
+                                            </td>
                                             <td><Button variant="warning" onClick={(event) => this.renderDataToForm(element)}>Update</Button></td>
                                             <td><Button variant="danger" onClick={(event) => this.removeProductById(element.productId)}>Delete</Button></td>
                                         </tr>
