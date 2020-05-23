@@ -7,7 +7,7 @@ import './ProductManagement.css'
 import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
-
+import empimg from '../../Images/noimg.jpg';
 import FileBase64 from 'react-file-base64';
 
 
@@ -23,6 +23,8 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
+
+            productImage:'',
 
             files: [],
             categoryList: [],
@@ -52,7 +54,10 @@ class ProductManagement extends Component {
     }
 
     getFiles(files){
-        this.setState({ files: files })
+        this.setState({ files: files });
+        this.setState({
+            productImage:this.state.files.base64
+        });
         console.log(files.base64);
       }
 
@@ -184,7 +189,10 @@ class ProductManagement extends Component {
             productImageRef:product.productImageRef,
             productDescription:product.productDescription,
             productRating:product.productRating,
-            productCategory:product.productCategory
+            productCategory:product.productCategory,
+            productImage:product.productImageRef
+
+
         },() => {
             console.log(this.state.productName);
             this.setState({
@@ -209,40 +217,24 @@ class ProductManagement extends Component {
             <div className="mainDiv">
                 <div>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
-                    <FileBase64
-            multiple={ false }
-            onDone={ this.getFiles.bind(this) } />
                     <Form className="mainForm">   
 
                         <Form.Row>
+
                             <Form.Group as={Col}>
+
                                 <Form.Label>Product Name</Form.Label>
                                 <Form.Control name='productName' value={this.state.productName} onChange={this.handleChange} type="text" placeholder="Enter Product Name" />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-
-                            <Form.Group as={Col}>
+                
                                 <Form.Label>Product Price</Form.Label>
                                 <Form.Control name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="text" placeholder="Enter Product Price" />
-                            </Form.Group>
 
-                            <Form.Group as={Col} >
                                 <Form.Label>Product Discount</Form.Label>
                                 <Form.Control name='productDiscount' value={this.state.productDiscount} onChange={this.handleChange} type="text" placeholder="Enter Product Discount" />
-                            </Form.Group>
 
-                        </Form.Row>
-
-                        <Form.Row>
-
-                            <Form.Group as={Col}>
                                 <Form.Label>Product Rating</Form.Label>
                                 <Form.Control name='productRating' value={this.state.productRating} onChange={this.handleChange} type="text" placeholder="Enter Product Rating" />
-                            </Form.Group>
-
-                            <Form.Group as={Col} >
+                            
                                 <Form.Label>Product Category</Form.Label>
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
@@ -252,24 +244,33 @@ class ProductManagement extends Component {
                                         </option>
                                     ))}
                                 </Form.Control>
+
+                                <Form.Label>Product Description</Form.Label>
+                                <Form.Control name='productDescription' value={this.state.productDescription} onChange={this.handleChange} className="productDescription" as="textarea" rows="10" />
+                         
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                 
-                                <Form.Label>Product Image</Form.Label>
-                                <Form.Control as="file"></Form.Control>
-                                {/* <input name='productPrice' value={this.state.productPrice} onChange={this.handleChange} type="file"></input> */}
-                                
+                                <Form.Label>Product Image</Form.Label><br/>
+                                <div class="productImageContainer">
+                                    <div class="imageContainer">
+                                        <img class="productImage" src={this.state.productImage}></img>
+                                    </div>
+
+                                    <div class="buttonContainer">
+                                        <FileBase64 multiple={ false } onDone={ this.getFiles.bind(this) } />
+                                    </div>
+                                    
+                                </div>
+                                            
                             </Form.Group>
 
                         </Form.Row>
 
                         <Form.Row>
 
-                            <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Product Description</Form.Label>
-                                <Form.Control name='productDescription' value={this.state.productDescription} onChange={this.handleChange} className="productDescription" as="textarea" rows="10" />
-                            </Form.Group>
+                            
 
                         </Form.Row>
 
@@ -286,9 +287,14 @@ class ProductManagement extends Component {
                                         </div>
                                     }
                                     
-                                    
                                 </Form.Group>
-                                
+
+                                <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
+                                    <div>
+                                        <Button variant="info" onClick={this.componentDidMount}>Cancel</Button>
+                                    </div>
+                                </Form.Group>
+                                                            
                             </Form.Row>
 
                         </Form>
