@@ -26,6 +26,7 @@ class ProductManagement extends Component {
 
             productImage:'',
 
+            selected:'',
             files: [],
             categoryList: [],
             productList: [] ,
@@ -34,8 +35,10 @@ class ProductManagement extends Component {
 
             editEnable:false,
             saved:false,
-
           };
+
+          this.myDivToFocus = React.createRef()
+
     }
 
     componentDidMount(){
@@ -48,6 +51,7 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
+            productImage:empimg
         })
 
         this.fetchProductList();
@@ -190,7 +194,7 @@ class ProductManagement extends Component {
             productRating:product.productRating,
             productCategory:product.productCategory,
             productImage:product.productImageRef,
-
+selected:product.productCategory,
             files:product.productImageRef
 
         },() => {
@@ -198,7 +202,16 @@ class ProductManagement extends Component {
             this.setState({
                 editEnable:true
             })
-        })
+        });
+
+
+        if(this.myDivToFocus.current){
+            this.myDivToFocus.current.scrollIntoView({ 
+               behavior: "smooth", 
+               block: "nearest"
+            })
+        }
+
     }
 
     removeProductById(productId){
@@ -215,7 +228,7 @@ class ProductManagement extends Component {
     render() {
         return (
             <div className="mainDiv">
-                <div>
+                <div ref={this.myDivToFocus}>
                     {/* <Form className="mainForm" onSubmit={this.productCommonFormController}> */}
                     <Form className="mainForm">   
 
@@ -239,7 +252,7 @@ class ProductManagement extends Component {
                                 <Form.Control as="select" onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         // <option key={category.categoryId}>Select a category</option>
-                                        <option key={category.categoryId} value={category.categoryId}>
+                                        <option selected={this.state.selected === category.categoryId} key={category.categoryId} value={category.categoryId}>
                                             {category.categoryName}
                                         </option>
                                     ))}
@@ -341,7 +354,6 @@ class ProductManagement extends Component {
                                             <td>{element.productDescription}</td>
                                             <td>{element.productRating}</td>
                                             <td>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
                                                 {
                                                     this.state.categoryList.map((cat,index)=>{
                                                         if(element.productCategory === cat.categoryId){
