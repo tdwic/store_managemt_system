@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form';
 import {toast, ToastContainer} from "react-toastify";
 import {CommonGet, CommonPost} from "../../config";
 import { browserHistory } from 'react-router';
-
-
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Dash from '../../App'
+import Modal from "react-bootstrap/Modal";
 
 export default class Loging extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class Loging extends Component {
             isLoaded : false,
             displayModel : false
         }
+
       }
 
     componentDidMount() {
@@ -26,7 +28,7 @@ export default class Loging extends Component {
             email : '',
             password : ''
         });
-
+            console.log("prop",this.props);
         CommonGet('user','')
             .then(res => res.json())
             .then(json => {
@@ -103,21 +105,7 @@ export default class Loging extends Component {
         return toast.error("Incorrect Credentials")
     }
 
-
-
-//        const { email , password } = this.state;
-//        if(email === ""){
-//            return toast.error("Email Field cannot be Empty");
-//        }else if(password === "") {
-//            return toast.error("Password Field cannot be Empty")
-//        }
-//
-//        for(int i=0; i<this.state.userList.length(); i++){
-//
-//        }
-//
-//        return toast.success("Account Successfully Created");
-        };
+    };
   render() {
 
   const myStyle = {

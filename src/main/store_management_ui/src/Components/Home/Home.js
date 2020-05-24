@@ -83,7 +83,8 @@ class Home extends Component {
                 "productId": product.productId,
                 "productName": product.productName,
                 "productPrice": product.productPrice,
-                "productDiscount": product.productDiscount
+                "productDiscount": product.productDiscount,
+                "productImageRef":product.productImageRef
             }
 
 
@@ -117,8 +118,16 @@ class Home extends Component {
                         <Card.Footer>
                             <Row>
                                 <Col  xs={8} md={8}>
-                                    <Card.Title>Rs.{product.productPrice}</Card.Title>
+                                    <Card.Title>Rs. {parseFloat(product.productPrice).toFixed(2)}</Card.Title>
+                                    {/*<input type="number" value="1" min="0" max="1000" step="1"/>*/}
+                                    {/*<script src="./src/bootstrap-input-spinner.js"></script>*/}
+                                    {/*<script>*/}
+                                    {/*    $("input[type='number']").inputSpinner()*/}
+                                    {/*</script>*/}
                                 </Col>
+
+
+
                                 <Col xs={2} md={1}>
                                     {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
                                     {/*   onClick={(event) => this.addToCart(product, event)}*/}
@@ -212,6 +221,7 @@ class Home extends Component {
                  </Carousel.Item>
              </Carousel>
          <br/>
+         <br/>
           {products}
              <ToastContainer
                  position="bottom-right"
@@ -227,8 +237,8 @@ class Home extends Component {
              />
              {/* Same as */}
 
-         </div>
 
+         </div>
 
 
     );

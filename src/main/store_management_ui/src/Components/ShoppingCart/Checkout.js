@@ -66,7 +66,7 @@ class Checkout extends Component {
                         <td>{item.productName}</td>
                         <td>{ parseFloat(item.productPrice).toFixed(2)}</td>
                         <td>{item.productDiscount}</td>
-                        <td>Table cell</td>
+                        {/*<td>Table cell</td>*/}
                         <td>{ parseFloat(item.productPrice-(item.productPrice * item.productDiscount/100)).toFixed(2)}</td>
                         <td>
                             <a href="#" className="ml-auto btn btn-danger btn-sm"  onClick={(event) => this.clearCartById(item.cartId,event)}>
@@ -93,7 +93,7 @@ class Checkout extends Component {
         var totalprice = 0;
         this.state.ShoppingcartList.map((item) => {
 
-            totalprice = totalprice +item.productPrice;
+            totalprice = totalprice +(item.productPrice-(item.productPrice * item.productDiscount/100));
         });
         return parseFloat(totalprice).toFixed(2);
 
@@ -114,7 +114,7 @@ class Checkout extends Component {
                     <th>Product</th>
                     <th>UnitPrice</th>
                     <th>Discount</th>
-                    <th>Quantity</th>
+                    {/*<th>Quantity</th>*/}
                     <th>Price</th>
                     <th>Action</th>
 

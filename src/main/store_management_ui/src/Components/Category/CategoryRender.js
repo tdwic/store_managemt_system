@@ -97,26 +97,21 @@ class CategoryRender extends Component {
             productset.map((product) => {
                 return (
                     <Col xs="4">
-                        <Card>
-                            <Card.Img variant="top" src={empimg} rounded />
+                        <Card id="productCard" key={product.productId}>
+                            <Card.Img id="productCardImage" variant="top" src={product.productImageRef} rounded />
                             <Card.Body>
                                 <Card.Title>{product.productName}</Card.Title>
                                 <Card.Text>
-                                <p> {product.productDescription}</p>
+                                    <p> {product.productDescription}</p>
 
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
                                 <Row>
                                     <Col  xs={8} md={8}>
-                                        <Card.Title>Rs.{product.productPrice}</Card.Title>
+                                        <Card.Title>Rs. {parseFloat(product.productPrice).toFixed(2)}</Card.Title>
                                     </Col>
                                     <Col xs={2} md={1}>
-                                        {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
-                                        {/*   onClick={(event) => this.addToCart(product, event)}*/}
-                                        {/*>*/}
-                                        {/*    <span className="fa fa-shopping-cart"></span>*/}
-                                        {/*</a>*/}
 
                                         <button
                                             type="button"
@@ -128,9 +123,7 @@ class CategoryRender extends Component {
                                     </Col>
                                     &nbsp; &nbsp; &nbsp;
                                     <Col xs={2} md={1}>
-                                        {/*<a href="#" className="ml-sm-3 btn btn-danger btn-sm">*/}
-                                        {/*    <span className="fa fa-heart-o"></span>*/}
-                                        {/*</a>*/}
+
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger"
@@ -140,9 +133,6 @@ class CategoryRender extends Component {
                                         </button>
                                     </Col>
                                 </Row>
-
-
-
                             </Card.Footer>
                         </Card>
                         <br/>
@@ -175,7 +165,7 @@ class CategoryRender extends Component {
                             height="30"
                             className="d-inline-block align-top"
                         />{' '}
-                        React Bootstrap
+                      Category
                     </Navbar.Brand>
                 </Navbar>
                 <br/>
