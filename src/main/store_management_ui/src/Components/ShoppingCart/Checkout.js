@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Table from "react-bootstrap/Table";
 import {CommonDeleteById, CommonGet} from "../../config";
-import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import CardDeck from "react-bootstrap/CardDeck";
 import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
-import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
+
 
 class Checkout extends Component {
     constructor(props){
@@ -18,7 +15,8 @@ class Checkout extends Component {
             ShoppingcartList: [],
             isLoaded: false,
             total:0,
-            isPayareaHidden:true
+            isPayareaHidden:true,
+            userList:[]
         }
     }
     componentDidMount() {
@@ -30,6 +28,30 @@ class Checkout extends Component {
                     ShoppingcartList: json
                 })
             });
+
+
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true,
+                    userList:json
+                });
+
+            }).then(()=>{ this.checkuserLogedIn();});
+
+    }
+
+
+    checkuserLogedIn(){
+        let userId =window.sessionStorage.getItem("UserId")
+
+        if(userId === "NF" || userId === null || userId === "" ){
+            this.props.history.push('/Loging');
+        }else{
+            this.props.history.push('/checkout');
+
+        }
     }
 
     clearCartById = (id,event) => {
@@ -143,10 +165,6 @@ class Checkout extends Component {
                                 <Form.Control type="email" placeholder="Enter email" />
                             </Form.Group>
 
-                            {/*<Form.Group as={Col} controlId="formGridPassword">*/}
-                            {/*    <Form.Label>Password</Form.Label>*/}
-                            {/*    <Form.Control type="password" placeholder="Password" />*/}
-                            {/*</Form.Group>*/}
                         </Form.Row>
                         <Form.Row>
                             <Form.Group  as={Col} controlId="formGridAddress1">
@@ -166,13 +184,7 @@ class Checkout extends Component {
                                 <Form.Control />
                             </Form.Group>
 
-                            {/*<Form.Group as={Col} controlId="formGridState">*/}
-                            {/*    <Form.Label>State</Form.Label>*/}
-                            {/*    <Form.Control as="select" value="Choose...">*/}
-                            {/*        <option>Choose...</option>*/}
-                            {/*        <option>...</option>*/}
-                            {/*    </Form.Control>*/}
-                            {/*</Form.Group>*/}
+
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Zip</Form.Label>
@@ -185,7 +197,7 @@ class Checkout extends Component {
                         <div className="radio" >
                             <label>
                                 <Form.Group as={Col} >
-                                <input type="radio" value="option1" checked={false} />
+                                <input type="radio" value="option1" checked={true} />
                                 Credit Card
                                 </Form.Group>
                                 <Form.Group as={Col} >

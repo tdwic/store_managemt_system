@@ -36,9 +36,23 @@ export default class Loging extends Component {
                     isLoaded: true,
                     userList:json
                 });
+                this.checkAlreadyLogedIn();
 
             });
     }
+
+
+    checkAlreadyLogedIn(){
+        let userId =window.sessionStorage.getItem("UserId")
+
+        if(userId === "NF" || userId === null || userId === "" ){
+            this.props.history.push('/Loging');
+        }else{
+            this.props.history.push('/AlreadyLogin');
+
+        }
+    }
+
 
     handleOnChange = (event) => {
         const state = this.state

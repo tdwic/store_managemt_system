@@ -1,7 +1,8 @@
 #productCard{
-    max-height: 590px;
-    min-height: 500px;
-}
+     max-height: 590px;
+     min-height: 500px;
+
+ }
 
 #productCardImage{
     max-height: 300px;

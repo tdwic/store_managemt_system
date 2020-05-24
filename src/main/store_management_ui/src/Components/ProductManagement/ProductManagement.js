@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import Spinner from 'react-bootstrap/Spinner';
 import './ProductManagement.css'
 import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,10 +32,11 @@ class ProductManagement extends Component {
             categoryList: [],
             productList: [] ,
             filteredProductList:[],
-            isLoaded : false,
+            isLoaded : true,
 
             editEnable:false,
             saved:false,
+            userList:[]
           };
 
           this.myDivToFocus = React.createRef()
@@ -51,13 +53,50 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
-            productImage:empimg
-        })
+            productImage:empimg,
+            editEnable:false,
+        });
 
         this.fetchProductList();
         this.fetchCategoryList();
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true,
+                    userList:json
+                });
+
+            }).then(()=>{ this.checkProductManagerAccess();});
+
+
     }
 
+    checkProductManagerAccess(){
+        let userId =window.sessionStorage.getItem("UserId")
+        let adminfound = false;
+        if(userId === "NF"){
+            this.props.history.push('/Loging');
+        }else{
+            this.state.userList.map((user) => {
+                if(user.id == userId && user.role == 2){
+                    adminfound = true;
+
+                }
+            });
+            if(adminfound == true){
+                this.props.history.push('/ProductManagement');
+
+            }else{
+                this.props.history.push('/Loging');
+            }
+        }
+    }
+
+    resetFormFields = (event) =>{
+        this.componentDidMount();
+    }
+        
     getFiles(files){
         this.setState({ files: files });
         this.setState({
@@ -107,6 +146,9 @@ class ProductManagement extends Component {
             if( formData.productName !== '' &&  formData.productPrice !== '' && formData.productDiscount !== '' && formData.productImageRef !== '' && formData.productDescription !== '' && formData.productRating !== '' && formData.productCategory !== ''){
                 console.log("new Product adding");
                 console.log(formData);
+                this.setState({
+                    isLoaded:true
+                })
                 CommonPost('product',formData)
                 .then(res=>res.json())
                 .then(json =>{
@@ -115,6 +157,9 @@ class ProductManagement extends Component {
                         isLoaded : true
                     })
                     this.componentDidMount();
+                    // this.setState({
+                    //     isLoaded:false
+                    // })
                     toast.success("Product Added Sucessfully!");
                 });
             }else{
@@ -194,7 +239,7 @@ class ProductManagement extends Component {
             productRating:product.productRating,
             productCategory:product.productCategory,
             productImage:product.productImageRef,
-selected:product.productCategory,
+            selected:product.productCategory,
             files:product.productImageRef
 
         },() => {
@@ -245,11 +290,11 @@ selected:product.productCategory,
                                 <Form.Label>Product Discount</Form.Label>
                                 <Form.Control name='productDiscount' value={this.state.productDiscount} onChange={this.handleChange} type="text" placeholder="Enter Product Discount" />
 
-                                <Form.Label>Product Rating</Form.Label>
+                                <Form.Label>Product Rating (1-5)</Form.Label>
                                 <Form.Control name='productRating' value={this.state.productRating} onChange={this.handleChange} type="text" placeholder="Enter Product Rating" />
                             
                                 <Form.Label>Product Category</Form.Label>
-                                <Form.Control as="select" onChange={this.handleClick} custom>
+                                <Form.Control as="select" defaultValue={"sdsd"} onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         // <option key={category.categoryId}>Select a category</option>
                                         <option selected={this.state.selected === category.categoryId} key={category.categoryId} value={category.categoryId}>
@@ -296,6 +341,17 @@ selected:product.productCategory,
                                         </div>
                                         :
                                         <div>
+                                            {
+                                                this.state.isLoaded?
+                                                <div>
+                                                   
+                                                </div>
+                                                :
+                                                <div>
+                                                     <Spinner animation="border" />
+                                                </div>
+                                            }
+                                            
                                             <Button variant="success"  onClick={this.productCommonFormController}>Add Product</Button>
                                         </div>
                                     }
@@ -304,7 +360,7 @@ selected:product.productCategory,
 
                                 <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                     <div>
-                                        <Button variant="info" onClick={this.componentDidMount}>Cancel</Button>
+                                        <Button variant="info" onClick={this.resetFormFields}>Cancel</Button>
                                     </div>
                                 </Form.Group>
                                                             
