@@ -33,6 +33,7 @@ import {CommonGet, CommonPost} from "./config";
 import CardGroup from "react-bootstrap/CardGroup";
 import CategoryShow from "./Components/Category/CategoryRender"
 import {toast} from "react-toastify";
+import AlreadyLoged from './Components/Authenticaton/AlreadyLogin';
 
 class App extends Component{
     constructor(props)
@@ -94,7 +95,6 @@ class App extends Component{
 
     checkAdminAccess(){
 
-        //
         // let userId =window.sessionStorage.getItem("UserId")
         // let adminfound = false;
         // if(userId == "NF"){
@@ -153,23 +153,19 @@ class App extends Component{
                         <li className="active">
                             <Link to={'/Home'}><span className="fa fa-home mr-3"></span> Home</Link>
                         </li>
-                        <li>
-                            <Link to={'/About'}><span className="fa fa-user mr-3"></span> About</Link>
-                        </li>
+
                         <li>
                             <Link to={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> Portfolio</Link>
                         </li>
                         <li>
                             <Link to={'WishList'}><span className="fa fa-sticky-note mr-3"></span> WishList</Link>
                         </li>
+
                         <li>
-                            <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
+                            <Link to={'/AdminDashboard'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
                         </li>
                         <li>
-                            <Link to={'/Loging'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
-                        </li>
-                        <li>
-                            <Link to={'/Loging'}><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
+                            <Link to={'/ProductManagement'}><span className="fa fa-product-hunt mr-3"></span> Product Management</Link>
                         </li>
 
                     </ul>
@@ -217,7 +213,7 @@ class App extends Component{
                                         onClick ={() => this.setState({addModalShow:true})}
                                     ><i className="fa fa-shopping-cart"></i>
                                     &nbsp;
-                                        <Badge variant="light">2</Badge>
+
                                      </button>
                                     <ShoppingCart
                                         show ={this.state.addModalShow }
@@ -241,7 +237,7 @@ class App extends Component{
                     <Route exact path='/UserProfile' component={UserProfile} />
                     <Route exact path='/WishList' component={WishList} />
                     <Route exact path='/Loging'  component={Loging} />
-                    {/*<Route exact path="/Loging" render={ props => <Loging {...props} v={this.checkAdminAccess}/>} />*/}
+                    <Route exact path='/AlreadyLogin' component={AlreadyLoged} />
                     <Route exact path='/SignUp' component={SignUp} />
 
                     {/*Linking Admin Components*/}
