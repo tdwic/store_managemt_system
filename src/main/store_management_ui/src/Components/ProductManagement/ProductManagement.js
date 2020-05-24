@@ -261,7 +261,7 @@ class ProductManagement extends Component {
                                 <Form.Control name='productRating' value={this.state.productRating} onChange={this.handleChange} type="text" placeholder="Enter Product Rating" />
                             
                                 <Form.Label>Product Category</Form.Label>
-                                <Form.Control as="select" onChange={this.handleClick} custom>
+                                <Form.Control as="select" defaultValue={"sdsd"} onChange={this.handleClick} custom>
                                     {this.state.categoryList.map((category) => (
                                         // <option key={category.categoryId}>Select a category</option>
                                         <option selected={this.state.selected === category.categoryId} key={category.categoryId} value={category.categoryId}>
