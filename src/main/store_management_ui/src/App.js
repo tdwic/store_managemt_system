@@ -155,10 +155,11 @@ class App extends Component{
                         </li>
 
                         <li>
-                            <Link to={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> Portfolio</Link>
-                        </li>
-                        <li>
                             <Link to={'WishList'}><span className="fa fa-sticky-note mr-3"></span> WishList</Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> User Account</Link>
                         </li>
 
                         <li>
