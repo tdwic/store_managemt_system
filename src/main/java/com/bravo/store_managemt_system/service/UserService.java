@@ -1,7 +1,6 @@
 package com.bravo.store_managemt_system.service;
 
 import com.bravo.store_managemt_system.model.User;
-import com.bravo.store_managemt_system.repository.CategoryRepository;
 import com.bravo.store_managemt_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -63,4 +62,10 @@ public class UserService {
             System.out.println(mailException);
         }
     }
+
+    public User UpdateUserStatus(User user){
+        User u = userRepository.save(user);
+        return u;
+    }
+
 }
