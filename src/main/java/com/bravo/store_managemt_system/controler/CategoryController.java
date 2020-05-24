@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "https://e-shopping-center.herokuapp.com")
+@CrossOrigin(origins = "http://e-shopping-center.herokuapp.com")
 public class CategoryController {
 
     @Autowired

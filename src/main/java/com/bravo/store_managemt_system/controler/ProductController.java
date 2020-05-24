@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@CrossOrigin(origins = "https://e-shopping-center.herokuapp.com")
+@CrossOrigin(origins = "http://e-shopping-center.herokuapp.com")
 public class ProductController {
 
    @Autowired
