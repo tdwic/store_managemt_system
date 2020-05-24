@@ -35,6 +35,7 @@ class ProductManagement extends Component {
 
             editEnable:false,
             saved:false,
+            userList:[]
           };
 
           this.myDivToFocus = React.createRef()
@@ -56,6 +57,38 @@ class ProductManagement extends Component {
 
         this.fetchProductList();
         this.fetchCategoryList();
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true,
+                    userList:json
+                });
+
+            }).then(()=>{ this.checkProductManagerAccess();});
+
+
+    }
+
+    checkProductManagerAccess(){
+        let userId =window.sessionStorage.getItem("UserId")
+        let adminfound = false;
+        if(userId === "NF"){
+            this.props.history.push('/Loging');
+        }else{
+            this.state.userList.map((user) => {
+                if(user.id == userId && user.role == 2){
+                    adminfound = true;
+
+                }
+            });
+            if(adminfound == true){
+                this.props.history.push('/ProductManagement');
+
+            }else{
+                this.props.history.push('/Loging');
+            }
+        }
     }
 
     getFiles(files){
