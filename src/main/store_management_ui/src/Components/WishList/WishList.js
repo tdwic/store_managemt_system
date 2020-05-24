@@ -9,6 +9,7 @@ import CardGroup from "react-bootstrap/CardGroup";
 import {CommonDeleteById, CommonGet, CommonPost} from "../../config";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
+import './WishList.css'
 
 class WishList extends Component {
   constructor(props){
@@ -39,27 +40,22 @@ class WishList extends Component {
             wishList.map((product) => {
                 return (
                     <Col xs="4">
-                        <Card>
-                            <Card.Img variant="top" src={empimg} rounded />
+
+                        <Card id="productCard" key={product.productId}>
+                            <Card.Img id="productCardImage" variant="top" src={product.productImageRef} rounded />
                             <Card.Body>
                                 <Card.Title>{product.productName}</Card.Title>
                                 <Card.Text>
-                                    <p> This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+                                    <p> {product.productDescription}</p>
 
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
                                 <Row>
                                     <Col  xs={8} md={8}>
-                                        <Card.Title>Rs.{product.productPrice}</Card.Title>
+                                        <Card.Title>Rs. {parseFloat(product.productPrice).toFixed(2)}</Card.Title>
                                     </Col>
                                     <Col xs={2} md={1}>
-                                        {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
-                                        {/*   onClick={(event) => this.addToCart(product, event)}*/}
-                                        {/*>*/}
-                                        {/*    <span className="fa fa-shopping-cart"></span>*/}
-                                        {/*</a>*/}
 
                                         <button
                                             type="button"
@@ -81,8 +77,15 @@ class WishList extends Component {
                                         </button>
                                     </Col>
                                 </Row>
+
+
+
                             </Card.Footer>
                         </Card>
+
+
+
+
                         <br/>
                     </Col>
 

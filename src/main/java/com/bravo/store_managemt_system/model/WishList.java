@@ -12,6 +12,7 @@ public class WishList {
     private String productName;
     private double productPrice;
     private double productDiscount;
+    private String productImageRef;
 
     public String getwishListId() {
         return wishListId;
@@ -59,6 +60,14 @@ public class WishList {
 
     public void setProductDiscount(double productDiscount) {
         this.productDiscount = productDiscount;
+    }
+
+    public String getProductImageRef() {
+        return productImageRef;
+    }
+
+    public void setProductImageRef(String productImageRef) {
+        this.productImageRef = productImageRef;
     }
 
 }
