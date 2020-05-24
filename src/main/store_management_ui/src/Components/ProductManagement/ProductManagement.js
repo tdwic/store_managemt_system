@@ -257,7 +257,7 @@ class ProductManagement extends Component {
                                 <Form.Label>Product Discount</Form.Label>
                                 <Form.Control name='productDiscount' value={this.state.productDiscount} onChange={this.handleChange} type="text" placeholder="Enter Product Discount" />
 
-                                <Form.Label>Product Rating</Form.Label>
+                                <Form.Label>Product Rating (1-5)</Form.Label>
                                 <Form.Control name='productRating' value={this.state.productRating} onChange={this.handleChange} type="text" placeholder="Enter Product Rating" />
                             
                                 <Form.Label>Product Category</Form.Label>
