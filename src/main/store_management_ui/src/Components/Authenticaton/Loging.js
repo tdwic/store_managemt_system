@@ -104,19 +104,6 @@ export default class Loging extends Component {
     }
 
 
-
-//        const { email , password } = this.state;
-//        if(email === ""){
-//            return toast.error("Email Field cannot be Empty");
-//        }else if(password === "") {
-//            return toast.error("Password Field cannot be Empty")
-//        }
-//
-//        for(int i=0; i<this.state.userList.length(); i++){
-//
-//        }
-//
-//        return toast.success("Account Successfully Created");
         };
   render() {
 
