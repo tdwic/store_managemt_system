@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card, Row} from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
@@ -22,30 +22,38 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Badge from "react-bootstrap/Badge";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ShoppingCart from "./Components/ShoppingCart/shoppingCart";
-import Admin from "./Components/Admin/Admin";
+
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import Category from "./Components/Admin/Category";
 import StoreManager from "./Components/Admin/StoreManager";
 import ProductManagement from './Components/ProductManagement/ProductManagement';
+import checkout from  "./Components/ShoppingCart/Checkout"
 import {CommonGet, CommonPost} from "./config";
 
 import CardGroup from "react-bootstrap/CardGroup";
 import CategoryShow from "./Components/Category/CategoryRender"
 import {toast} from "react-toastify";
+import AlreadyLoged from './Components/Authenticaton/AlreadyLogin';
+
 class App extends Component{
-    constructor()
+    constructor(props)
     {
-    super()
+    super(props)
         this.state={
             unit:0,
             addModalShow:false,
             cartList:[],
             categories:[],
+            userList:[],
             id:""
         }
 
     }
     componentDidMount(){
+
+
+
+        this.checkAdminAccess();
 
         CommonGet('category','')
             .then(res=>res.json())
@@ -61,12 +69,7 @@ class App extends Component{
     navigate = (id,event) => {
 
        const x = id.toString();
-
        window.sessionStorage.setItem("CatId:",x);
-
-        // this.setState({
-        //     id: id
-        // })
 
     };
 
@@ -78,9 +81,7 @@ class App extends Component{
 
                     <NavDropdown.Item href =   {'/categoryshow'} onClick={(event) => this.navigate(category.categoryId, event)} >
                         {category.categoryName}
-
                     </NavDropdown.Item>
-
                 );
             }));
         return (
@@ -92,10 +93,48 @@ class App extends Component{
         );
     }
 
+    checkAdminAccess(){
+
+        // let userId =window.sessionStorage.getItem("UserId")
+        // let adminfound = false;
+        // if(userId == "NF"){
+        //     return true;
+        // }else{
+        //     this.state.userList.map((user) => {
+        //         if(user.id == userId && user.role == 1){
+        //           adminfound = true;
+        //
+        //         }
+        //     });
+        //    if(adminfound == true){
+        //        return false;
+        //
+        //     }else{
+        //        return true
+        //    }
+        // }
+    }
+
+    // checkAdminAccess(){
+    //     let userId =window.sessionStorage.getItem("UserId")
+    //     let adminfound = false;
+    //     if(userId == "NF"){
+    //         return true;
+    //     }else{
+    //         this.state.userList.map((user) => {
+    //             if(user.id == userId && user.role == 1){
+    //                 return false;
+    //
+    //             }
+    //         });
+    //     }
+    // }
+
 
   render(){
       let addModalClose = () => this.setState({addModalShow:false });
       let renderDropDown = this.rendercategoryDropDown(this.state.categories);
+
   return (
     <Router>
     <div className="App">
@@ -114,18 +153,14 @@ class App extends Component{
                         <li className="active">
                             <Link to={'/Home'}><span className="fa fa-home mr-3"></span> Home</Link>
                         </li>
-                        <li>
-                            <Link to={'/About'}><span className="fa fa-user mr-3"></span> About</Link>
-                        </li>
+
                         <li>
                             <Link to={'/UserProfile'}><span className="fa fa-briefcase mr-3"></span> Portfolio</Link>
                         </li>
                         <li>
                             <Link to={'WishList'}><span className="fa fa-sticky-note mr-3"></span> WishList</Link>
                         </li>
-                        <li>
-                            <Link to="#"><span className="fa fa-paper-plane mr-3"></span> Contact</Link>
-                        </li>
+
                         <li>
                             <Link to={'/AdminDashboard'}><span className="fa fa-cogs mr-3"></span>Admin</Link>
                         </li>
@@ -178,7 +213,7 @@ class App extends Component{
                                         onClick ={() => this.setState({addModalShow:true})}
                                     ><i className="fa fa-shopping-cart"></i>
                                     &nbsp;
-                                        <Badge variant="light">2</Badge>
+
                                      </button>
                                     <ShoppingCart
                                         show ={this.state.addModalShow }
@@ -201,7 +236,8 @@ class App extends Component{
                     <Route exact path='/About' component={About} />
                     <Route exact path='/UserProfile' component={UserProfile} />
                     <Route exact path='/WishList' component={WishList} />
-                    <Route exact path='/Loging' component={Loging} />
+                    <Route exact path='/Loging'  component={Loging} />
+                    <Route exact path='/AlreadyLogin' component={AlreadyLoged} />
                     <Route exact path='/SignUp' component={SignUp} />
 
                     {/*Linking Admin Components*/}
@@ -213,6 +249,7 @@ class App extends Component{
                     <Route exact path='/ProductManagement' component={ProductManagement}/>
                     {/*Category show method*/}
                     <Route exact path="/categoryshow" component={CategoryShow} />
+                    <Route exact path="/checkout" component={checkout} />
                 </Switch>
 
         </div>

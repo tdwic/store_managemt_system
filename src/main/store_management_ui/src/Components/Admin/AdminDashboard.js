@@ -19,15 +19,48 @@ export default class AdminDashboard extends Component {
         this.state = {
             categories:[],
             users:[],
-            storeManagers:[]
+            storeManagers:[],
+            userList:[]
         }
     }
 
     componentDidMount() {
         this.listAllCategories();
         this.listAllStoreManagers();
+        CommonGet('user','')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true,
+                    userList:json
+                });
+
+            }).then(()=>{ this.checkAdminAccess();});
+
+
     }
 
+
+    checkAdminAccess(){
+        let userId =window.sessionStorage.getItem("UserId")
+        let adminfound = false;
+        if(userId === "NF"){
+            this.props.history.push('/Loging');
+        }else{
+            this.state.userList.map((user) => {
+                if(user.id == userId && user.role == 1){
+                  adminfound = true;
+
+                }
+            });
+           if(adminfound == true){
+               this.props.history.push('/AdminDashboard');
+
+            }else{
+               this.props.history.push('/Loging');
+           }
+        }
+    }
 
     listAllCategories = () =>{
         CommonGet('category','')

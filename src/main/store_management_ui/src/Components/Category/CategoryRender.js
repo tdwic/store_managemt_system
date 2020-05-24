@@ -9,6 +9,7 @@ import Carousel from "react-bootstrap/Carousel";
 import img1 from "../../Images/img01.jpg";
 import img2 from "../../Images/img02.jpg";
 import img5 from "../../Images/img00.jpg";
+import Navbar from "react-bootstrap/Navbar";
 
 class CategoryRender extends Component {
     constructor(props)
@@ -25,7 +26,7 @@ class CategoryRender extends Component {
 
     componentDidMount(){
        let id=  sessionStorage.getItem("CatId:");
-       console.log("id",id);
+
         CommonGet('productByCategoryId',id)
             .then(res=>res.json())
             .then(json =>{
@@ -34,6 +35,8 @@ class CategoryRender extends Component {
                     productSet: json
                 })
             });
+
+
 
     }
 
@@ -94,26 +97,21 @@ class CategoryRender extends Component {
             productset.map((product) => {
                 return (
                     <Col xs="4">
-                        <Card>
-                            <Card.Img variant="top" src={empimg} rounded />
+                        <Card id="productCard" key={product.productId}>
+                            <Card.Img id="productCardImage" variant="top" src={product.productImageRef} rounded />
                             <Card.Body>
                                 <Card.Title>{product.productName}</Card.Title>
                                 <Card.Text>
-                                <p> {product.productDescription}</p>
+                                    <p> {product.productDescription}</p>
 
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
                                 <Row>
                                     <Col  xs={8} md={8}>
-                                        <Card.Title>Rs.{product.productPrice}</Card.Title>
+                                        <Card.Title>Rs. {parseFloat(product.productPrice).toFixed(2)}</Card.Title>
                                     </Col>
                                     <Col xs={2} md={1}>
-                                        {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
-                                        {/*   onClick={(event) => this.addToCart(product, event)}*/}
-                                        {/*>*/}
-                                        {/*    <span className="fa fa-shopping-cart"></span>*/}
-                                        {/*</a>*/}
 
                                         <button
                                             type="button"
@@ -125,9 +123,7 @@ class CategoryRender extends Component {
                                     </Col>
                                     &nbsp; &nbsp; &nbsp;
                                     <Col xs={2} md={1}>
-                                        {/*<a href="#" className="ml-sm-3 btn btn-danger btn-sm">*/}
-                                        {/*    <span className="fa fa-heart-o"></span>*/}
-                                        {/*</a>*/}
+
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger"
@@ -137,9 +133,6 @@ class CategoryRender extends Component {
                                         </button>
                                     </Col>
                                 </Row>
-
-
-
                             </Card.Footer>
                         </Card>
                         <br/>
@@ -163,43 +156,18 @@ class CategoryRender extends Component {
         return (
 
             <div>
-                <Carousel>
-                    <Carousel.Item>
+                <Navbar bg="dark" variant="dark">
+                    <Navbar.Brand href="#home">
                         <img
-                            className="d-block w-100 "
-                            src={img1}
-                            alt="First slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>E-Shopping Center</h3>
-                            <p class="text-dark">Shopping From Home, Without Wasting Your Time !</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100 "
-                            src={img2}
-                            alt="Third slide"
-                        />
-
-                        <Carousel.Caption>
-                            <h3>Fast Delivery Every Where!</h3>
-                            <p class="text-dark">24x7 Island Wide Delivery Service! </p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src={img5}
-                            alt="Third slide"
-                        />
-
-                        <Carousel.Caption>
-                            <h3>Quality Products</h3>
-                            <p class="text-dark">World Famouse Top Rated Brands!</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
+                            alt=""
+                            src="/logo.svg"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
+                      Category
+                    </Navbar.Brand>
+                </Navbar>
                 <br/>
                 {products}
                 <ToastContainer

@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form';
 import {toast, ToastContainer} from "react-toastify";
 import {CommonGet, CommonPost} from "../../config";
 import { browserHistory } from 'react-router';
-
-
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Dash from '../../App'
+import Modal from "react-bootstrap/Modal";
 
 export default class Loging extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class Loging extends Component {
             isLoaded : false,
             displayModel : false
         }
+
       }
 
     componentDidMount() {
@@ -26,7 +28,7 @@ export default class Loging extends Component {
             email : '',
             password : ''
         });
-
+            console.log("prop",this.props);
         CommonGet('user','')
             .then(res => res.json())
             .then(json => {
@@ -34,9 +36,23 @@ export default class Loging extends Component {
                     isLoaded: true,
                     userList:json
                 });
+                this.checkAlreadyLogedIn();
 
             });
     }
+
+
+    checkAlreadyLogedIn(){
+        let userId =window.sessionStorage.getItem("UserId")
+
+        if(userId === "NF" || userId === null || userId === "" ){
+            this.props.history.push('/Loging');
+        }else{
+            this.props.history.push('/AlreadyLogin');
+
+        }
+    }
+
 
     handleOnChange = (event) => {
         const state = this.state
@@ -103,8 +119,7 @@ export default class Loging extends Component {
         return toast.error("Incorrect Credentials")
     }
 
-
-        };
+    };
   render() {
 
   const myStyle = {
