@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import Spinner from 'react-bootstrap/Spinner';
 import './ProductManagement.css'
 import { CommonGet, CommonDeleteById, CommonPost, CommonUpdate } from '../../config';
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,7 +32,7 @@ class ProductManagement extends Component {
             categoryList: [],
             productList: [] ,
             filteredProductList:[],
-            isLoaded : false,
+            isLoaded : true,
 
             editEnable:false,
             saved:false,
@@ -51,13 +52,18 @@ class ProductManagement extends Component {
             productDiscount:'',
             productPrice:'',
             productRating:'',
-            productImage:empimg
-        })
+            productImage:empimg,
+            editEnable:false,
+        });
 
         this.fetchProductList();
         this.fetchCategoryList();
     }
 
+    resetFormFields = (event) =>{
+        this.componentDidMount();
+    }
+        
     getFiles(files){
         this.setState({ files: files });
         this.setState({
@@ -107,6 +113,9 @@ class ProductManagement extends Component {
             if( formData.productName !== '' &&  formData.productPrice !== '' && formData.productDiscount !== '' && formData.productImageRef !== '' && formData.productDescription !== '' && formData.productRating !== '' && formData.productCategory !== ''){
                 console.log("new Product adding");
                 console.log(formData);
+                this.setState({
+                    isLoaded:true
+                })
                 CommonPost('product',formData)
                 .then(res=>res.json())
                 .then(json =>{
@@ -115,6 +124,9 @@ class ProductManagement extends Component {
                         isLoaded : true
                     })
                     this.componentDidMount();
+                    // this.setState({
+                    //     isLoaded:false
+                    // })
                     toast.success("Product Added Sucessfully!");
                 });
             }else{
@@ -194,7 +206,7 @@ class ProductManagement extends Component {
             productRating:product.productRating,
             productCategory:product.productCategory,
             productImage:product.productImageRef,
-selected:product.productCategory,
+            selected:product.productCategory,
             files:product.productImageRef
 
         },() => {
@@ -296,6 +308,17 @@ selected:product.productCategory,
                                         </div>
                                         :
                                         <div>
+                                            {
+                                                this.state.isLoaded?
+                                                <div>
+                                                   
+                                                </div>
+                                                :
+                                                <div>
+                                                     <Spinner animation="border" />
+                                                </div>
+                                            }
+                                            
                                             <Button variant="success"  onClick={this.productCommonFormController}>Add Product</Button>
                                         </div>
                                     }
@@ -304,7 +327,7 @@ selected:product.productCategory,
 
                                 <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                                     <div>
-                                        <Button variant="info" onClick={this.componentDidMount}>Cancel</Button>
+                                        <Button variant="info" onClick={this.resetFormFields}>Cancel</Button>
                                     </div>
                                 </Form.Group>
                                                             
