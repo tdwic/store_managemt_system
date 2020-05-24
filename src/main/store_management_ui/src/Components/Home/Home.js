@@ -105,10 +105,10 @@ class Home extends Component {
 
             productset.map((product) => {
                 return (
-                    <Col xs="4">
-                    <Card id="productCard" key={product.productId}>
+                    <Col  xs="3">
+                    <Card style = {{height:'500px'}} id="productCard" key={product.productId}>
                         <Card.Img id="productCardImage" variant="top" src={product.productImageRef} rounded />
-                        <Card.Body>
+                        <Card.Body style = {{overflow:'auto'}}>
                             <Card.Title>{product.productName}</Card.Title>
                             <Card.Text>
                                <p> {product.productDescription}</p>
@@ -117,7 +117,7 @@ class Home extends Component {
                         </Card.Body>
                         <Card.Footer>
                             <Row>
-                                <Col  xs={8} md={8}>
+                                <Col  xs={6} >
                                     <Card.Title>Rs. {parseFloat(product.productPrice).toFixed(2)}</Card.Title>
                                     {/*<input type="number" value="1" min="0" max="1000" step="1"/>*/}
                                     {/*<script src="./src/bootstrap-input-spinner.js"></script>*/}
@@ -128,7 +128,7 @@ class Home extends Component {
 
 
 
-                                <Col xs={2} md={1}>
+                                <Col xs={2} >
                                     {/*<a href="#" className="ml-auto btn btn-info btn-sm"*/}
                                     {/*   onClick={(event) => this.addToCart(product, event)}*/}
                                     {/*>*/}
@@ -144,7 +144,7 @@ class Home extends Component {
                                     </button>
                                 </Col>
                                 &nbsp; &nbsp; &nbsp;
-                                <Col xs={2} md={1}>
+                                <Col xs={2} >
                                     {/*<a href="#" className="ml-sm-3 btn btn-danger btn-sm">*/}
                                     {/*    <span className="fa fa-heart-o"></span>*/}
                                     {/*</a>*/}
