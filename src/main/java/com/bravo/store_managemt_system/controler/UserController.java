@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "e-shopping-center.herokuapp.com")
 public class UserController {
 
     @Autowired
